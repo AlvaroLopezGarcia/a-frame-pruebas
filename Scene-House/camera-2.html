@@ -21,6 +21,7 @@
         <img id="pared" src="pared.jpeg">
         <img id="camino" src="floor.jpeg">
         <img id="cesped" src="cesped.jpeg">
+        <img id="caja" src="caja.jpeg">
       </a-assets>
       <!--USER POSITION-->
 
@@ -53,7 +54,7 @@
         position="-0.75 4 2.5" rotation="-90 0 0" scale="2.5 2.5 2.5"></a-text>
       <!-- PUSH THE BOX -->
       <a-box dynamic-body position="0 4.2 12" width="1.5" height="2" depth="1"
-              color="blue" sound="src: url(silla_2.mp3); autoplay:true"></a-box>
+              src="#caja" sound="src: url(silla_2.mp3); autoplay:true"></a-box>
 
       <!-- GAME OVER-->
 
@@ -96,7 +97,7 @@
         position="0.3 3.5 -11" rotation="0 0 0" scale="2.5 2.5 2.5"></a-text>
       <!-- Push box -->
       <a-box dynamic-body position="1 2 -11" width="1.7" height="1.7" depth="1.7"
-                color="#993333" sound="src: url(silla_2.mp3); autoplay:true"></a-box>
+                src="#caja" sound="src: url(silla_2.mp3); autoplay:true"></a-box>
       <!-- Static left-front-wall -->
       <a-plane static-body position="-4 2.5 -6" rotation="0 0 0" width="2" height="3"
                side ="double" src="#pared"></a-plane>
