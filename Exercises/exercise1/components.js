@@ -10,7 +10,7 @@ AFRAME.registerComponent('programmer_component', {
 
     this.eventProgrammerHandlerMouseEnter = function () {
     	let box = document.createElement('a-box');
-      document.getElementById('scene').appendChild(box);
+      this.sceneEl.appendChild(box);
       let current_list = this.getAttribute('programmer_component').list;
       let num = this.getAttribute('programmer_component').count;
       let pos = this.getAttribute("position");
