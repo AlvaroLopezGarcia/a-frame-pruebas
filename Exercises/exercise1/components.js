@@ -33,14 +33,11 @@ AFRAME.registerComponent('programmer_component', {
 
     this.eventProgrammerHandlerClick = function () {
       let current_list = this.getAttribute('programmer_component').list;
-      let pos_max = this.getAttribute('programmer_component').count;
       let mobile = document.getElementById('mobile');
       let instruction = "";
-      let instruction_id = "";
 
-      for (i = 0; i < pos_max; i++) {
-        instruction_id = current_list[i];
-        instruction = document.getElementById(instruction_id);
+      for (let id of current_list) {
+        instruction = document.getElementById(id);
         instruction.emit('click');
       }
     };

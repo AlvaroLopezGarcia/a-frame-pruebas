@@ -1,3 +1,10 @@
+AFRAME.registerComponent('programming-enviroment', {
+  
+  update: function(oldData) {
+    console.log("Estoy en el update de programming-enviroment");
+  },
+});
+
 AFRAME.registerComponent('programmer_component', {
   schema: {
     events: {type: 'array', default: ['click','mouseenter']},
@@ -10,7 +17,7 @@ AFRAME.registerComponent('programmer_component', {
 
     this.eventProgrammerHandlerMouseEnter = function () {
     	let box = document.createElement('a-box');
-      this.sceneEl.appendChild(box);
+      document.getElementById("programmer").appendChild(box);
       let current_list = this.getAttribute('programmer_component').list;
       let num = this.getAttribute('programmer_component').count;
       let pos = this.getAttribute("position");
@@ -33,15 +40,26 @@ AFRAME.registerComponent('programmer_component', {
 
     this.eventProgrammerHandlerClick = function () {
       let current_list = this.getAttribute('programmer_component').list;
-      let pos_max = this.getAttribute('programmer_component').count;
+      // let pos_max = this.getAttribute('programmer_component').count;
       let mobile = document.getElementById('mobile');
-      let instruction = "";
-      let instruction_id = "";
+      //let instruction = "";
+      //let instruction_id = "";
 
-      for (i = 0; i < pos_max; i++) {
-        instruction_id = current_list[i];
-        instruction = document.getElementById(instruction_id);
+
+/**      for (let id of current_list) {
+        instruction = document.getElementById(id);
         instruction.emit('click');
+        console.log("Ha entrado");
+      }
+**/
+      let programmer_children = document.getElementById("programmer").children;
+      //let pos_max = programmer_children.length;
+      for (let instruction of programmer_children) {
+        //instruction = programmer_children[i];
+        if(instruction.getAttribute("value")!=="PROGRAMMER"){
+          instruction.emit('click');
+          console.log("He entrado");
+        }
       }
     };
 
