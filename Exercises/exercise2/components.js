@@ -31,7 +31,7 @@ AFRAME.registerComponent('programmer_component', {
       this.setAttribute('programmer_component', {count: num});
       box.setAttribute('position',{x:pos_x,y:pos_y,z:pos.z});
       box.setAttribute('id',instruction_id);
-      box.setAttribute('instruction_component', {event: 'click'});
+      box.setAttribute('instruction_component', {event: 'mouseleave'});
     };
 
     //Localiza todos los mobile que tengan el id de este programa
@@ -41,7 +41,7 @@ AFRAME.registerComponent('programmer_component', {
       let program_id = mobile.getAttribute("mobile_component").program;  //id of the program that uses this mobile
 
       if(this.getAttribute('id') === program_id){
-          mobile.emit('click');
+          mobile.emit('mousedown');
       }
     };
 
@@ -60,27 +60,20 @@ AFRAME.registerComponent('programmer_component', {
 
 AFRAME.registerComponent('mobile_component', {
   schema: {
-    event: {type: 'string', default: 'click'},
+    event: {type: 'string', default: 'mousedown'},
     program: {type: 'string', default: ''},
   },
 
   init: function(){
     var self = this;
 
-    this.eventMobileHandlerClick = function (){
+    this.eventMobileHandlerMouseDown = function (){
       let program_id = this.getAttribute("mobile_component").program;
       let instructions = document.getElementById(program_id).children;
-      //let pos_max = instructions.length - 1;
-      //let count = 0;
 
       for (let instruction of instructions) {
-        //if(count<=pos_max){       //Solucion tomada para evitar bucle infinito
-          //count++;
-          if(instruction.getAttribute("value")!=="PROGRAMMER"){
-            instruction.emit('click');
-          }
-        //}else{
-        //  break;
+        if(instruction.getAttribute("value")!=="PROGRAMMER"){
+          instruction.emit('mouseleave');
         }
       }
     };
@@ -92,7 +85,7 @@ AFRAME.registerComponent('mobile_component', {
     
     if(!oldData.event){  //The first time we call update, oldData hasn't got any attribute
       console.log("Añado handler de mobile_component");
-      el.addEventListener(data.event, this.eventMobileHandlerClick);
+      el.addEventListener(data.event, this.eventMobileHandlerMouseDown);
     }
     console.log("Estoy en el update de mobile_component");
   },
@@ -107,7 +100,7 @@ AFRAME.registerComponent('instruction_component', {
     var self = this;
 
     //Suponemos que trabajamos con un solo mobile
-    this.eventInstructionHandlerClick = function () {
+    this.eventInstructionHandlerMouseLeave = function () {
       let program_id = this.parentNode.getAttribute("id");
       let mobile = document.getElementById('mobile');
       let pos = {};
@@ -124,7 +117,7 @@ AFRAME.registerComponent('instruction_component', {
     var el = this.el;
     
     if(!oldData.event){  //The first time we call update, oldData hasn't got any attribute
-      el.addEventListener(data.event, this.eventInstructionHandlerClick);
+      el.addEventListener(data.event, this.eventInstructionHandlerMouseLeave);
     }
   },
 });
