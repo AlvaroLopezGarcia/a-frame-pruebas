@@ -14,11 +14,19 @@ AFRAME.registerComponent('programmer_component', {
   init: function () {
     var self = this;
 
+    let box = document.createElement('a-box');
+    document.getElementById("programmer").appendChild(box);
+    box.setAttribute('position',{x:0.5,y:0.5,z:-6});
+    box.setAttribute('width',"1");
+    box.setAttribute('height',"1");
+    box.setAttribute('depth',"1.7");
+    box.setAttribute('color',"brown");
+
     this.eventProgrammerHandlerMouseEnter = function () {
-      let box = document.createElement('a-box');
-      document.getElementById("programmer").appendChild(box);
+    	let box = document.createElement('a-box');
+      document.getElementById("instructions").appendChild(box);
       let num = this.getAttribute('programmer_component').count;
-      let pos = this.getAttribute("position");
+      let pos = this.children[2].getAttribute("position");
       let pos_x = pos.x + 2;
       let pos_y = pos.y;
       let incremento = 1;
@@ -31,12 +39,12 @@ AFRAME.registerComponent('programmer_component', {
       this.setAttribute('programmer_component', {count: num});
       box.setAttribute('position',{x:pos_x,y:pos_y,z:pos.z});
       box.setAttribute('id',instruction_id);
-      box.setAttribute('instruction_component', {event: 'click'});
+      box.setAttribute('instruction_component', {event: 'run'});
     };
 
-    //Localiza todos los mobile que tengan el id de este programa
+    //Finds all the mobiles with a specific program id
     this.eventProgrammerHandlerClick = function () {
-      //De momento trabajamos con un solo mobile
+      //In this exercise we only have ONE mobile
       let mobile = document.getElementById("mobile");
       let program_id = mobile.getAttribute("mobile_component").program;  //id of the program that uses this mobile
 
@@ -48,13 +56,13 @@ AFRAME.registerComponent('programmer_component', {
   },
 
   update: function(oldData) {
-    var el = this.el;
-    var data = this.data;
-    
-    if(! oldData.events){  //The first time we call update, oldData hasn't got any attribute
-      el.addEventListener(data.events[0], this.eventProgrammerHandlerClick);
+  	var el = this.el;
+  	var data = this.data;
+  	
+  	if(! oldData.events){  //The first time we call update, oldData hasn't got any attribute
+		  el.addEventListener(data.events[0], this.eventProgrammerHandlerClick);
       el.addEventListener(data.events[1],this.eventProgrammerHandlerMouseEnter);
-    }
+  	}
   },
 });
 
@@ -67,17 +75,14 @@ AFRAME.registerComponent('mobile_component', {
   init: function(){
     var self = this;
 
-    this.eventMobileHandlerClick = function (){
+    this.eventMobileHandlerMouseDown = function (){
       let program_id = this.getAttribute("mobile_component").program;
-      let instructions = document.getElementById(program_id).children;
+      let instructions = document.getElementById(program_id).children[1].children;
 
       for (let instruction of instructions) {
-        if(instruction.getAttribute("value")!=="PROGRAMMER"){
-          instruction.emit('click');
-        }
+        instruction.emit('run');
       }
     };
-
   },
 
   update: function(oldData) {
@@ -85,10 +90,8 @@ AFRAME.registerComponent('mobile_component', {
     var el = this.el;
     
     if(!oldData.event){  //The first time we call update, oldData hasn't got any attribute
-      console.log("Añado handler de mobile_component");
-      el.addEventListener(data.event, this.eventMobileHandlerClick);
+      el.addEventListener(data.event, this.eventMobileHandlerMouseDown);
     }
-    console.log("Estoy en el update de mobile_component");
   },
 });
 
@@ -100,9 +103,9 @@ AFRAME.registerComponent('instruction_component', {
   init: function () {
     var self = this;
 
-    //Suponemos que trabajamos con un solo mobile
-    this.eventInstructionHandlerClick = function () {
-      let program_id = this.parentNode.getAttribute("id");
+    ////In this exercise we only have ONE mobile 
+    this.eventInstructionHandlerRun = function () {
+      let program_id = this.parentNode.parentNode.getAttribute("id");
       let mobile = document.getElementById('mobile');
       let pos = {};
 
@@ -118,7 +121,15 @@ AFRAME.registerComponent('instruction_component', {
     var el = this.el;
     
     if(!oldData.event){  //The first time we call update, oldData hasn't got any attribute
-      el.addEventListener(data.event, this.eventInstructionHandlerClick);
+      el.addEventListener(data.event, this.eventInstructionHandlerRun);
     }
+  },
+
+});
+
+AFRAME.registerComponent('instructions', {
+
+  update: function(oldData) {
+    console.log("Estoy en el update de instructions");
   },
 });
