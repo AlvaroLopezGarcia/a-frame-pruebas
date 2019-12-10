@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="//aframe.io/releases/0.8.2/aframe.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.0.0/dist/aframe-extras.min.js"></script>
+    <script src="components.js"></script>
+  <body>
+    <a-scene physics="debug: true" id="scene">
+      <a-assets>
+        <img id="tejado" src="../Images/tejado.jpeg">
+      </a-assets>
+      
+      <!--USER POSITION-->
+      <!-- Camera rig, with a camera and a cylynder -->
+      <a-entity movement-controls="fly: false" position="0 1 4" look-controls>
+        <a-entity camera position="0 1.6 0" >
+          <a-cursor></a-cursor>
+        </a-entity>
+      </a-entity>
+
+      <a-entity programming-enviroment id="programming-enviroment">
+        <a-entity programmer_component id="programmer">
+          <a-text value="PROGRAMMER" color="white" position="0.1 0.5 -5.1" rotation="0 0 0" scale="0.5 2 0.5"></a-text>
+          <a-box button="text:Up" width="1" height="1" depth="1" position="-0.25 -2 -6" color="blue"></a-box>
+          <a-box button="text:Down" width="1" height="1" depth="1" position='1.25 -2 -6' color='pink'></a-box>
+          <a-box button="text:Run" width="1" height="1" depth="1" position="-0.25 -4 -6" color="green"></a-box>
+          <a-box button="text:Delete" width="1" height="1" depth="1" position='1.25 -4 -6' color='red'></a-box>
+          
+          <a-entity instructions id="instructions"></a-entity>
+        </a-entity>
+      </a-entity>
+
+      <a-box mobile_component="program:programmer" static-body position="-2 0.5 -6" width="1" height="1" depth="1.7"
+          src="#tejado" id="mobile"></a-box>
+
+      <a-sky color="grey"></a-sky>
+    </a-scene>
+  </body>
+</html>
