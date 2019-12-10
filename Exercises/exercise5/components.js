@@ -19,28 +19,8 @@ AFRAME.registerComponent('programmer_component', {
     box.setAttribute('position',{x:0.5,y:0.5,z:-6});
     box.setAttribute('color',"brown");
     box.setAttribute('geometry', {width: '1',height: "1",depth: "1.7"});
-    
-    //Finds all the mobiles with a specific program id
-    /*this.eventProgrammerHandlerClick = function () {
-      //In this exercise we only have ONE mobile
-      let mobile = document.getElementById("mobile");
-      let program_id = mobile.getAttribute("mobile_component").program;  //id of the program that uses this mobile
-
-      if(this.getAttribute('id') === program_id){
-        mobile.emit('mousedown');
-      }
-    };*/
-
   },
 
-  /*update: function(oldData) {
-  	var el = this.el;
-  	var data = this.data;
-  	
-  	if(! oldData.event){  //The first time we call update, oldData hasn't got any attribute
-		  el.addEventListener(data.event, this.eventProgrammerHandlerClick);
-  	}
-  },*/
 });
 
 AFRAME.registerComponent('mobile_component', {
