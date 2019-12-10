@@ -182,8 +182,12 @@ AFRAME.registerComponent('button', {
 
     this.eventButtonHandlerDelete = function () {
       let instructions = document.getElementById("programmer").children[5];
+      let child = instructions.lastElementChild;
 
-      instructions.innerHTML = ""; 
+      while (child) { 
+        instructions.removeChild(child); 
+        child = instructions.lastElementChild; 
+      }
     };
 
     if(this.data.text === 'Up'){
