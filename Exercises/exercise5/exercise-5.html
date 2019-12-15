@@ -24,12 +24,14 @@
 
       <a-entity programming-enviroment id="programming-enviroment">
         <a-entity programmer_component id="programmer">
-          <a-text value="PROGRAMMER" color="white" position="-0.7 4.5 -5.6" rotation="0 0 0" scale="1.5 2 0.5"></a-text>
+          <a-text value="PROGRAMMER" color="white" position="-0.6 4.25 -5.6" rotation="0 0 0" scale="2.5 2 0.5" width="7"></a-text>
           <a-box button="text:Up" width="1" height="1" depth="0.5" position="-0.25 3.25 -5.6" color="blue"></a-box>
           <a-box button="text:Down" width="1" height="1" depth="0.5" position='1.25 3.25 -5.6' color='pink'></a-box>
-          <a-box button="text:Run" width="1" height="1" depth="0.5" position="0.5 0.75 -5.6" color="green"></a-box>
-          <a-box button="text:Delete Instructions" width="1" height="1" depth="0.5" position='1.25 2 -5.6' color='orange'></a-box>
-          <a-box button="text:Delete Program" width="1" height="1" depth="0.5" position='-0.25 2 -5.6' color='red'></a-box>
+          <a-box button="text:Left" width="1" height="1" depth="0.5" position="-0.25 2 -5.6" color="black"></a-box>
+          <a-box button="text:Right" width="1" height="1" depth="0.5" position='1.25 2 -5.6' color='purple'></a-box>
+          <a-box button="text:Delete Instructions" width="1" height="1" depth="0.5" position='3 3.25 -5.6' color='orange'></a-box>
+          <a-box button="text:Delete Program" width="1" height="1" depth="0.5" position='4.5 3.25 -5.6' color='red'></a-box>
+          <a-box button="text:Run" width="1" height="1" depth="0.5" position="3.75 2 -5.6" color="green"></a-box>
           <a-entity instructions id="instructions"></a-entity>
         </a-entity>
       </a-entity>
