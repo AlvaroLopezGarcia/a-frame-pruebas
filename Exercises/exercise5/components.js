@@ -37,56 +37,57 @@ AFRAME.registerComponent('programming-enviroment', {
     upEntity.appendChild(upBox);
     upEntity.setAttribute('button',{text:'Up'});
     upBox.setAttribute('position',{x:-0.25,y:3.25,z:-5.45});
-    upBox.setAttribute('color',"blue");
     upBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    upBox.setAttribute('src',"#up_button");
 
     //Button Down
     programmerEntity.appendChild(downEntity);
     downEntity.appendChild(downBox);
     downEntity.setAttribute('button',{text:'Down'});
     downBox.setAttribute('position',{x:1.25,y:3.25,z:-5.45});
-    downBox.setAttribute('color',"pink");
     downBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    downBox.setAttribute('src',"#down_button");
 
     //Button Left
     programmerEntity.appendChild(leftEntity);
     leftEntity.appendChild(leftBox);
     leftEntity.setAttribute('button',{text:'Left'});
     leftBox.setAttribute('position',{x:-0.25,y:2,z:-5.45});
-    leftBox.setAttribute('color',"black");
     leftBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    leftBox.setAttribute('src',"#left_button");
 
     //Button Right
     programmerEntity.appendChild(rightEntity);
     rightEntity.appendChild(rightBox);
     rightEntity.setAttribute('button',{text:'Right'});
     rightBox.setAttribute('position',{x:1.25,y:2,z:-5.45});
-    rightBox.setAttribute('color',"purple");
     rightBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    rightBox.setAttribute('src',"#right_button");
 
     //Button Delete Instructions
     programmerEntity.appendChild(deleteInstructEntity);
     deleteInstructEntity.appendChild(deleteInstructBox);
     deleteInstructEntity.setAttribute('button',{text:'Delete Instructions'});
     deleteInstructBox.setAttribute('position',{x:3,y:3.25,z:-5.45});
-    deleteInstructBox.setAttribute('color',"orange");
     deleteInstructBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    deleteInstructBox.setAttribute('src',"#delete_instructions_button");
 
     //Button Delete Program
     programmerEntity.appendChild(deleteProgEntity);
     deleteProgEntity.appendChild(deleteProgBox);
     deleteProgEntity.setAttribute('button',{text:'Delete Program'});
     deleteProgBox.setAttribute('position',{x:4.5,y:3.25,z:-5.45});
-    deleteProgBox.setAttribute('color',"red");
     deleteProgBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    deleteProgBox.setAttribute('src',"#delete_program_button");
+
 
     //Button Run
     programmerEntity.appendChild(runEntity);
     runEntity.appendChild(runBox);
     runEntity.setAttribute('button',{text:'Run'});
     runBox.setAttribute('position',{x:3.75,y:2,z:-5.45});
-    runBox.setAttribute('color',"green");
     runBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    runBox.setAttribute('src',"#run_button");
 
     //Instructions
     programmerEntity.appendChild(instructionsEntity);
@@ -215,6 +216,7 @@ AFRAME.registerComponent('button', {
     programmer.setAttribute('programmer_component', {count: num});
     box.setAttribute('position',{x:pos_x,y:pos_y,z:pos.z});
     box.setAttribute('geometry', {width: '1',height: "0.5",depth: "0.5"});
+    box.setAttribute('src',"#up_instruction");
     instruction.setAttribute('id',instruction_id);
     instruction.setAttribute('instruction_component', {event: 'run',type:'Up'});
   },
@@ -240,6 +242,7 @@ AFRAME.registerComponent('button', {
     programmer.setAttribute('programmer_component', {count: num});
     box.setAttribute('position',{x:pos_x,y:pos_y,z:pos.z});
     box.setAttribute('geometry', {width: '1',height: "0.5",depth: "0.5"});
+    box.setAttribute('src',"#down_instruction");
     instruction.setAttribute('id',instruction_id);
     instruction.setAttribute('instruction_component', {event: 'run',type:'Down'});
   },
@@ -265,6 +268,7 @@ AFRAME.registerComponent('button', {
     programmer.setAttribute('programmer_component', {count: num});
     box.setAttribute('position',{x:pos_x,y:pos_y,z:pos.z});
     box.setAttribute('geometry', {width: '1',height: "0.5",depth: "0.5"});
+    box.setAttribute('src',"#left_instruction");
     instruction.setAttribute('id',instruction_id);
     instruction.setAttribute('instruction_component', {event: 'run',type:'Left'});
   },
@@ -290,6 +294,7 @@ AFRAME.registerComponent('button', {
     programmer.setAttribute('programmer_component', {count: num});
     box.setAttribute('position',{x:pos_x,y:pos_y,z:pos.z});
     box.setAttribute('geometry', {width: '1',height: "0.5",depth: "0.5"});
+    box.setAttribute('src',"#right_instruction");
     instruction.setAttribute('id',instruction_id);
     instruction.setAttribute('instruction_component', {event: 'run',type:'Right'});
   },
