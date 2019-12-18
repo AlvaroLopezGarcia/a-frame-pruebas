@@ -348,7 +348,6 @@ AFRAME.registerComponent('button', {
   eventButtonHandlerReset: function () {
     let mobile = document.getElementById('mobile');
     let pos = mobile.getAttribute('mobile_component').position;
-    let deleteInstructions = document.getElementById('programmer').children[5];
 
     mobile.setAttribute('position',{x:pos[0],y:pos[1],z:pos[2]});
   }
