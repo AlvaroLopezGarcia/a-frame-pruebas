@@ -19,6 +19,8 @@ AFRAME.registerComponent('programming-enviroment', {
     let deleteProgBox = document.createElement('a-box');
     let runEntity = document.createElement('a-entity');
     let runBox = document.createElement('a-box');
+    let resetEntity = document.createElement('a-entity');
+    let resetBox = document.createElement('a-box');
     let instructionsEntity = document.createElement('a-entity');
 
 
@@ -85,9 +87,17 @@ AFRAME.registerComponent('programming-enviroment', {
     programmerEntity.appendChild(runEntity);
     runEntity.appendChild(runBox);
     runEntity.setAttribute('button',{text:'Run'});
-    runBox.setAttribute('position',{x:3.75,y:2,z:-5.45});
+    runBox.setAttribute('position',{x:3,y:2,z:-5.45});
     runBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
     runBox.setAttribute('src',"#run_button");
+
+    //Button Reset
+    programmerEntity.appendChild(resetEntity);
+    resetEntity.appendChild(resetBox);
+    resetEntity.setAttribute('button',{text:'Reset'});
+    resetBox.setAttribute('position',{x:4.5,y:2,z:-5.45});
+    resetBox.setAttribute('geometry', {width: '1',height: "1",depth: "0.5"});
+    resetBox.setAttribute('src',"#reset_button");
 
     //Instructions
     programmerEntity.appendChild(instructionsEntity);
@@ -111,17 +121,20 @@ AFRAME.registerComponent('mobile_component', {
   schema: {
     event: {type: 'string', default: 'mousedown'},
     program: {type: 'string', default: ''},
+    position: {type: 'array', default: []},
   },
 
   init: function(){
     var self = this;
+    let pos = this.el.getAttribute('position');
 
     this.el.addEventListener(this.data.event, this.eventMobileHandlerMouseDown);
+    this.el.setAttribute('mobile_component',{position: [pos.x,pos.y,pos.z]});
   },
 
   eventMobileHandlerMouseDown: function (){
     let program_id = this.getAttribute("mobile_component").program;
-    let instructions = document.getElementById(program_id).children[8].children;
+    let instructions = document.getElementById(program_id).children[9].children;
 
     for (let instruction of instructions) {
       instruction.emit('run');
@@ -192,6 +205,8 @@ AFRAME.registerComponent('button', {
       this.el.addEventListener("click", this.eventButtonHandlerDeleteInstructions);
     }else if(this.data.text === 'Delete Program'){
       this.el.addEventListener("click", this.eventButtonHandlerDeleteProgram);
+    }else if(this.data.text === 'Reset'){
+      this.el.addEventListener("click",this.eventButtonHandlerReset);
     }
   },
 
@@ -201,7 +216,7 @@ AFRAME.registerComponent('button', {
     let box = document.createElement('a-box');
     let programmer = document.getElementById("programmer");
     let num = programmer.getAttribute('programmer_component').count;
-    let pos = programmer.children[9].getAttribute("position");
+    let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
     let pos_y = pos.y;
     let incremento = 1;
@@ -210,7 +225,7 @@ AFRAME.registerComponent('button', {
     document.getElementById("instructions").appendChild(instruction);
     instruction.appendChild(box);
     if(num !== 0){
-      pos_y += num + incremento*num;
+      pos_y += 0.55*num;
     }
     num += incremento;
     programmer.setAttribute('programmer_component', {count: num});
@@ -227,7 +242,7 @@ AFRAME.registerComponent('button', {
     let box = document.createElement('a-box');
     let programmer = document.getElementById("programmer");
     let num = programmer.getAttribute('programmer_component').count;
-    let pos = programmer.children[9].getAttribute("position");
+    let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
     let pos_y = pos.y;
     let incremento = 1;
@@ -236,7 +251,7 @@ AFRAME.registerComponent('button', {
     document.getElementById("instructions").appendChild(instruction);
     instruction.appendChild(box);
     if(num !== 0){
-      pos_y += num + incremento*num;
+      pos_y += 0.55*num;
     }
     num += incremento;
     programmer.setAttribute('programmer_component', {count: num});
@@ -253,7 +268,7 @@ AFRAME.registerComponent('button', {
     let box = document.createElement('a-box');
     let programmer = document.getElementById("programmer");
     let num = programmer.getAttribute('programmer_component').count;
-    let pos = programmer.children[9].getAttribute("position");
+    let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
     let pos_y = pos.y;
     let incremento = 1;
@@ -262,7 +277,7 @@ AFRAME.registerComponent('button', {
     document.getElementById("instructions").appendChild(instruction);
     instruction.appendChild(box);
     if(num !== 0){
-      pos_y += num + incremento*num;
+      pos_y += 0.55*num;
     }
     num += incremento;
     programmer.setAttribute('programmer_component', {count: num});
@@ -279,7 +294,7 @@ AFRAME.registerComponent('button', {
     let box = document.createElement('a-box');
     let programmer = document.getElementById("programmer");
     let num = programmer.getAttribute('programmer_component').count;
-    let pos = programmer.children[9].getAttribute("position");
+    let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
     let pos_y = pos.y;
     let incremento = 1;
@@ -288,7 +303,7 @@ AFRAME.registerComponent('button', {
     document.getElementById("instructions").appendChild(instruction);
     instruction.appendChild(box);
     if(num !== 0){
-      pos_y += num + incremento*num;
+      pos_y += 0.55*num;
     }
     num += incremento;
     programmer.setAttribute('programmer_component', {count: num});
@@ -312,7 +327,7 @@ AFRAME.registerComponent('button', {
   },
 
   eventButtonHandlerDeleteInstructions: function () {
-    let instructions = document.getElementById("programmer").children[8];
+    let instructions = document.getElementById("programmer").children[9];
     let child = instructions.lastElementChild;
     let programmer = document.getElementById("programmer");
 
@@ -329,5 +344,14 @@ AFRAME.registerComponent('button', {
 
     ide.removeChild(program);
   },
+  //WE ONLY HAVE ONE MOBILE
+  eventButtonHandlerReset: function () {
+    let mobile = document.getElementById('mobile');
+    let pos = mobile.getAttribute('mobile_component').position;
+    let deleteInstructions = document.getElementById('programmer').children[5];
+
+    mobile.setAttribute('position',{x:pos[0],y:pos[1],z:pos[2]});
+    deleteInstructions.emit('click');
+  }
 
 });
