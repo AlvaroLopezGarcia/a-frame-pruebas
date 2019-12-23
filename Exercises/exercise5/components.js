@@ -214,7 +214,7 @@ AFRAME.registerComponent('button', {
     //e.stopPropagation();
     let instruction = document.createElement('a-entity');
     let box = document.createElement('a-box');
-    let programmer = document.getElementById("programmer");
+    let programmer = this.parentNode;
     let num = programmer.getAttribute('programmer_component').count;
     let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
@@ -240,7 +240,7 @@ AFRAME.registerComponent('button', {
     //e.stopPropagation();
     let instruction = document.createElement('a-entity');
     let box = document.createElement('a-box');
-    let programmer = document.getElementById("programmer");
+    let programmer = this.parentNode;
     let num = programmer.getAttribute('programmer_component').count;
     let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
@@ -266,7 +266,7 @@ AFRAME.registerComponent('button', {
     //e.stopPropagation();
     let instruction = document.createElement('a-entity');
     let box = document.createElement('a-box');
-    let programmer = document.getElementById("programmer");
+    let programmer = this.parentNode;
     let num = programmer.getAttribute('programmer_component').count;
     let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
@@ -292,7 +292,7 @@ AFRAME.registerComponent('button', {
     //e.stopPropagation();
     let instruction = document.createElement('a-entity');
     let box = document.createElement('a-box');
-    let programmer = document.getElementById("programmer");
+    let programmer = this.parentNode;
     let num = programmer.getAttribute('programmer_component').count;
     let pos = programmer.children[10].getAttribute("position");
     let pos_x = pos.x + 5;
@@ -327,9 +327,10 @@ AFRAME.registerComponent('button', {
   },
 
   eventButtonHandlerDeleteInstructions: function () {
-    let instructions = document.getElementById("programmer").children[9];
+    let programmer = this.parentNode;
+    let instructions = programmer.children[9];
     let child = instructions.lastElementChild;
-    let programmer = document.getElementById("programmer");
+    
 
     while (child) { 
       instructions.removeChild(child); 
