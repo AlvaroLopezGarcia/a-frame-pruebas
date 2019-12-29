@@ -504,7 +504,7 @@ AFRAME.registerComponent('button', {
     
     //Next program menu
     programmerEntity.appendChild(text);
-    programmerEntity.setAttribute('programmer_component', {count: 0, position: programmerPosition});
+    programmerEntity.setAttribute('programmer_component', {count: 0, position: ideCount});
     programmerEntity.setAttribute('id',programmerId);
     ide.appendChild(programmerEntity);
 
