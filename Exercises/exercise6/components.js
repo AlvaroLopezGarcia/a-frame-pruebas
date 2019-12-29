@@ -1,5 +1,8 @@
 AFRAME.registerComponent('programming-enviroment', {
-  
+  schema: {
+    count: {type: 'number', default: 0}, //number of programs that have been created
+  },
+
   init: function(oldData) {
     var self = this;
     let ide = document.getElementById('programming-enviroment');
@@ -31,6 +34,7 @@ AFRAME.registerComponent('programming-enviroment', {
 
     //IDE menu
     ide.appendChild(ideBox);
+    ide.setAttribute('programming-enviroment',{count:1});
     ideBox.setAttribute('position',{x:2.1,y:3,z:-5.9});
     ideBox.setAttribute('color',"black");
     ideBox.setAttribute('geometry', {width: '6.5',height: "6",depth: "0.5"});
@@ -399,9 +403,57 @@ AFRAME.registerComponent('button', {
 
   eventButtonHandlerDeleteProgram: function () {
     let ide = document.getElementById('programming-enviroment');
+    let ideBox = ide.children[0];
+    let newProgramEntity = ide.children[1];
+    let newProgramBox = newProgramEntity.children[0];
     let program = this.parentNode;
-
+    let programBox = program.children[10];
+    let incremento = 3.54;
+    let ideBoxPos = ideBox.getAttribute('position');
+    let ideBoxPosY = ideBoxPos.y - incremento/2;
+    let ideHeight = ideBox.getAttribute('geometry').height - programBox.getAttribute('geometry').height;
+    const children = Array.from(ide.children);  //Before remove
+    const ideLengthBefore = ide.children.length;      //Before remove
+    let num = children.indexOf(program);
+    let nextChild = num;
+    let entity,entityBox,child,pos,ideLengthAfter;
+    
+    //Remove program
     ide.removeChild(program);
+    ideLengthAfter = ide.children.length;
+    if (ideLengthBefore === 3){  //Only one program
+      //Modify menu IDE
+      pos = ideBox.getAttribute('position');
+      ideBox.setAttribute('geometry', {height: String(ideHeight)});
+      pos = newProgramBox.getAttribute('position');
+      newProgramBox.setAttribute('position',{x:pos.x,y:pos.y+incremento/2,z:pos.z});
+    }else if (ideLengthAfter >= 3){  //Two or more programs
+      while(num < ideLengthAfter) {
+        entity = ide.children[num];
+        for (let i = 0; i < entity.children.length; i++) {     //each program children
+          if (i!==0 && i<9){
+            entityBox = entity.children[i].children[0];
+            pos = entityBox.getAttribute('position');
+            entityBox.setAttribute('position',{x:pos.x,y:pos.y+incremento,z:pos.z});
+          }else if(i===0 || i===10){      //text and program box
+            child = entity.children[i];
+            pos = child.getAttribute('position');
+            child.setAttribute('position',{x:pos.x,y:pos.y+incremento,z:pos.z});
+          }
+        }
+        num++;
+      }
+      //Modify menu IDE
+      pos = ideBox.getAttribute('position');
+      ideBox.setAttribute('geometry', {height: String(ideHeight)});
+      ideBoxPosY = ideBoxPos.y + incremento/2;
+      ideBox.setAttribute('position',{x:pos.x,y:ideBoxPosY,z:pos.z});
+      pos = newProgramBox.getAttribute('position');
+      //Modify botton New Program
+      num = program.getAttribute('programmer_component').position;
+      newProgramBox.setAttribute('position',{x:pos.x,y:pos.y+incremento,z:pos.z});
+    }
+    
   },
   //WE ONLY HAVE ONE MOBILE
   eventButtonHandlerReset: function () {
@@ -413,6 +465,7 @@ AFRAME.registerComponent('button', {
 
   eventButtonHandlerNewProgram: function () {
     let ide = document.getElementById('programming-enviroment');
+    let ideCount = ide.getAttribute('programming-enviroment').count + 1;
     let ideBox = ide.children[0];
     let newProgramBox = ide.children[1].children[0];
     let text = document.createElement('a-text');
@@ -437,11 +490,12 @@ AFRAME.registerComponent('button', {
     let instructionsEntity = document.createElement('a-entity');
     let incremento = 3.54;       //Height Programmer Menu
     let programmerPosition = ide.children.length-1;
-    let programmerId = 'programmer' + programmerPosition;
+    let programmerId = 'programmer' + ideCount;
     let ideBoxPosY = 3-(incremento*(programmerPosition-1))/2;
     let ideHeight = 6+incremento*(programmerPosition-1);
 
     //IDE menu
+    ide.setAttribute('programming-enviroment',{count:ideCount});
     ideBox.setAttribute('geometry', {height: String(ideHeight)});
     ideBox.setAttribute('position',{x:2.1,y:ideBoxPosY,z:-5.9});
 
