@@ -512,7 +512,7 @@ AFRAME.registerComponent('button', {
         const ideLengthBefore = ide.children.length; //Before remove
         let num = children.indexOf(program);
         let nextChild = num;
-        let entity, entityBox, child, pos, ideLengthAfter, mobile;
+        let entity, entityBox, child, pos, ideLengthAfter, mobile, plane;
 
         //Remove program
         ide.removeChild(program);
@@ -555,8 +555,9 @@ AFRAME.registerComponent('button', {
                 mobile = mobiles[i];
                 if (programId === mobile.getAttribute('mobile_component').program) {
                     mobile = mobiles[i];
-                    mobile.setAttribute('mobile_component', { program: "" }); //deleted program assigned to this mobile
-                    //Also, I will have to modify the src and the color of the mobileBox, and the mobile SCHEMA
+                    plane = mobile.children[3];
+                    mobile.setAttribute('mobile_component', { program: "" });
+                    plane.removeAttribute('src');
                 }
             }
 
