@@ -24,10 +24,6 @@ AFRAME.registerComponent('programming-enviroment', {
         let deleteInstructBox = document.createElement('a-box');
         let deleteProgEntity = document.createElement('a-entity');
         let deleteProgBox = document.createElement('a-box');
-        let runEntity = document.createElement('a-entity');
-        let runBox = document.createElement('a-box');
-        let resetEntity = document.createElement('a-entity');
-        let resetBox = document.createElement('a-box');
         let instructionsEntity = document.createElement('a-entity');
         let programmerId = 'programmer';
 
@@ -50,7 +46,7 @@ AFRAME.registerComponent('programming-enviroment', {
         //First program menu
         programmerEntity.appendChild(text);
         //programmerEntity.setAttribute('programmer_component', {count: 0, position: ide.children.length-1});
-        programmerEntity.setAttribute('programmer_component', { position: ide.children.length - 1 });
+        programmerEntity.setAttribute('programmer_component', { position: ide.children.length - 1, icon: "icon1" });
         programmerId += ide.children.length - 1;
         programmerEntity.setAttribute('id', programmerId);
         ide.appendChild(programmerEntity);
@@ -108,31 +104,13 @@ AFRAME.registerComponent('programming-enviroment', {
         deleteProgBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
         deleteProgBox.setAttribute('src', "#delete_program_button");
 
-
-        //Run Button
-        programmerEntity.appendChild(runEntity);
-        runEntity.appendChild(runBox);
-        runEntity.setAttribute('button', { text: 'Run' });
-        runBox.setAttribute('position', { x: 3, y: 2, z: -5.45 });
-        runBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        runBox.setAttribute('src', "#run_button");
-
-        //Reset Button
-        programmerEntity.appendChild(resetEntity);
-        resetEntity.appendChild(resetBox);
-        resetEntity.setAttribute('button', { text: 'Reset' });
-        resetBox.setAttribute('position', { x: 4.5, y: 2, z: -5.45 });
-        resetBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        resetBox.setAttribute('src', "#reset_button");
-
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
         instructionsEntity.setAttribute('instructions');
-        //instructionsEntity.setAttribute('id','instructions');
 
         programmerEntity.appendChild(programmerBox);
         programmerBox.setAttribute('position', { x: 2.1, y: 3, z: -5.85 });
-        programmerBox.setAttribute('color', "brown");
+        programmerBox.setAttribute('src', "#icon1");
         programmerBox.setAttribute('geometry', { width: '6', height: "3.5", depth: "0.5" });
     },
 });
@@ -141,6 +119,7 @@ AFRAME.registerComponent('programmer_component', {
     schema: {
         count: { type: 'number', default: 0 }, //number of instructions
         position: { type: 'number', default: 0 }, //number of program
+        icon: { type: 'string', default: '' },
     },
 });
 
@@ -148,24 +127,136 @@ AFRAME.registerComponent('mobile_component', {
     schema: {
         event: { type: 'string', default: 'mousedown' },
         program: { type: 'string', default: '' },
-        position: { type: 'array', default: [] },
+        position: { type: 'array', default: [] }, //origin position
     },
 
     init: function() {
         var self = this;
-        let pos = this.el.getAttribute('position');
+        let mobile = this.el.children[0];
+        let pos = mobile.getAttribute('position');
 
-        this.el.addEventListener(this.data.event, this.eventMobileHandlerMouseDown);
+        mobile.addEventListener(this.data.event, this.eventMobileHandlerMouseDown);
         this.el.setAttribute('mobile_component', { position: [pos.x, pos.y, pos.z] });
     },
 
     eventMobileHandlerMouseDown: function() {
-        let program_id = this.getAttribute("mobile_component").program;
-        let instructions = document.getElementById(program_id).children[9].children;
+        let program_id = this.parentNode.getAttribute("mobile_component").program;
+        let instructions = document.getElementById(program_id).children[7].children;
+        let mobile = this.parentNode;
 
         for (let instruction of instructions) {
-            instruction.emit('run');
+            instruction.emit('run', mobile);
         }
+    },
+});
+
+AFRAME.registerComponent('mobiles', {
+    schema: {
+        count: { type: 'number', default: 0 }, //number of mobiles that have been created
+    },
+
+    init: function(oldData) {
+        var self = this;
+        let mobiles = document.getElementById('mobiles-enviroment');
+        let mobilesBox = document.createElement('a-box');
+        let mobilesText = document.createElement('a-text');
+        let mobileEntity = document.createElement('a-entity');
+        let mobileMenu = document.createElement('a-box');
+        let mobileBox = document.createElement('a-box');
+        let mobileText = document.createElement('a-text');
+        let mobileId = 'mobile';
+        let plane = document.createElement('a-plane');
+        let runEntity = document.createElement('a-entity');
+        let runBox = document.createElement('a-box');
+        let resetEntity = document.createElement('a-entity');
+        let resetBox = document.createElement('a-box');
+        let newMobileEntity = document.createElement('a-entity');
+        let newMobileBox = document.createElement('a-box');
+        let programEntity = document.createElement('a-entity');
+        let programBox = document.createElement('a-box');
+
+        //Mobile box
+        mobileBox.setAttribute('position', { x: -2, y: 0.5, z: -6 });
+        mobileBox.setAttribute('src', "#tejado");
+        mobileEntity.appendChild(mobileBox);
+
+        //Mobiles menu
+        mobiles.appendChild(mobilesBox);
+        mobiles.setAttribute('mobiles', { count: 1 });
+        mobilesBox.setAttribute('position', { x: -6, y: 3, z: 5 });
+        mobilesBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        mobilesBox.setAttribute('color', "black");
+        mobilesBox.setAttribute('geometry', { width: '6.5', height: "6", depth: "0.5" });
+
+        //Text mobiles menu
+        mobiles.appendChild(mobilesText);
+        mobilesText.setAttribute('position', { x: -5.7, y: 5.35, z: 7.7 });
+        mobilesText.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        mobilesText.setAttribute('scale', { x: 4, y: 3, z: 0.5 });
+        mobilesText.setAttribute('text', { value: 'MOBILES', color: 'white', width: '7' });
+
+        //New  mobile button
+        newMobileEntity.setAttribute('button', { text: 'New Mobile' });
+        newMobileBox.setAttribute('position', { x: -5.65, y: 0.65, z: 5 });
+        newMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        newMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        newMobileBox.setAttribute('src', "#new_mobile_button");
+
+        newMobileEntity.appendChild(newMobileBox);
+        mobiles.appendChild(newMobileEntity);
+
+        //Firt mobile menu
+        mobileEntity.appendChild(mobileMenu);
+        mobileEntity.setAttribute('mobile_component', { program: 'programmer1' });
+        mobileId += mobiles.children.length - 2;
+        mobileEntity.setAttribute('id', mobileId);
+        mobileMenu.setAttribute('position', { x: -5.9, y: 3, z: 5 });
+        mobileMenu.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        mobileMenu.setAttribute('color', 'brown');
+        mobileMenu.setAttribute('geometry', { width: '6', height: "3.5", depth: "0.5" });
+        mobiles.appendChild(mobileEntity);
+
+        //Text mobile menu
+        mobileEntity.appendChild(mobileText);
+        mobileText.setAttribute('position', { x: -5.6, y: 4.4, z: 6.6 });
+        mobileText.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        mobileText.setAttribute('scale', { x: 2.5, y: 2, z: 0.5 });
+        mobileText.setAttribute('text', { value: 'MOBILE', color: 'white', width: '7' });
+
+        //Plane program used
+        mobileEntity.appendChild(plane);
+        //plane.setAttribute('color', 'white');
+        plane.setAttribute('src', '#icon1');
+        plane.setAttribute('position', { x: -5.6, y: 4.4, z: 3 });
+        plane.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        plane.setAttribute('geometry', { width: '0.5', height: "0.5" });
+
+        //Run Button
+        mobileEntity.appendChild(runEntity);
+        runEntity.appendChild(runBox);
+        runEntity.setAttribute('button', { text: 'Run' });
+        runBox.setAttribute('position', { x: -5.65, y: 3.3, z: 3.5 });
+        runBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        runBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        runBox.setAttribute('src', "#run_button");
+
+        //Reset Button
+        mobileEntity.appendChild(resetEntity);
+        resetEntity.appendChild(resetBox);
+        resetEntity.setAttribute('button', { text: 'Reset' });
+        resetBox.setAttribute('position', { x: -5.65, y: 2, z: 3.5 });
+        resetBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        resetBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        resetBox.setAttribute('src', "#reset_button");
+
+        //Program Button
+        mobileEntity.appendChild(programEntity);
+        programEntity.appendChild(programBox);
+        programEntity.setAttribute('button', { text: 'Program' });
+        programBox.setAttribute('position', { x: -5.65, y: 3.3, z: 6.4 });
+        programBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        programBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        programBox.setAttribute('src', "#program_button");
     },
 });
 
@@ -181,22 +272,23 @@ AFRAME.registerComponent('instruction_component', {
         this.el.addEventListener(this.data.event, this.eventInstructionHandlerRun);
     },
 
-    ////In this exercise we only have ONE mobile 
-    eventInstructionHandlerRun: function() {
-        let program_id = this.parentNode.parentNode.getAttribute("id");
-        let mobile = document.getElementById('mobile');
+    eventInstructionHandlerRun: function(e) {
+        let program = this.parentNode.parentNode;
+        let program_id = program.getAttribute("id");
+        let mobile = e.detail;
+        let box = mobile.children[0];
         let pos = {};
 
         if (program_id === mobile.getAttribute("mobile_component").program) {
-            pos = mobile.getAttribute("position");
+            pos = box.getAttribute("position");
             if (this.getAttribute("instruction_component").type === 'Up') {
-                mobile.setAttribute('position', { x: pos.x, y: pos.y + 1, z: pos.z });
+                box.setAttribute('position', { x: pos.x, y: pos.y + 1, z: pos.z });
             } else if (this.getAttribute("instruction_component").type === 'Down') {
-                mobile.setAttribute('position', { x: pos.x, y: pos.y - 1, z: pos.z });
+                box.setAttribute('position', { x: pos.x, y: pos.y - 1, z: pos.z });
             } else if (this.getAttribute("instruction_component").type === 'Left') {
-                mobile.setAttribute('position', { x: pos.x - 1, y: pos.y, z: pos.z });
+                box.setAttribute('position', { x: pos.x - 1, y: pos.y, z: pos.z });
             } else if (this.getAttribute("instruction_component").type === 'Right') {
-                mobile.setAttribute('position', { x: pos.x + 1, y: pos.y, z: pos.z });
+                box.setAttribute('position', { x: pos.x + 1, y: pos.y, z: pos.z });
             }
         }
     },
@@ -236,6 +328,12 @@ AFRAME.registerComponent('button', {
             this.el.addEventListener("click", this.eventButtonHandlerReset);
         } else if (this.data.text === 'New Program') {
             this.el.addEventListener("click", this.eventButtonHandlerNewProgram);
+        } else if (this.data.text === 'New Mobile') {
+            this.el.addEventListener("click", this.eventButtonHandlerNewMobile);
+        } else if (this.data.text === 'Program') {
+            this.el.addEventListener("click", this.eventButtonHandlerProgram);
+        } else if (this.data.text === 'Change Program') {
+            this.el.addEventListener("click", this.eventButtonHandlerChangeProgram);
         }
     },
 
@@ -244,10 +342,10 @@ AFRAME.registerComponent('button', {
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
+        let instructions = programmer.children[7];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
+        let pos = programmer.children[8].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
@@ -278,10 +376,10 @@ AFRAME.registerComponent('button', {
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
+        let instructions = programmer.children[7];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
+        let pos = programmer.children[8].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
@@ -312,10 +410,10 @@ AFRAME.registerComponent('button', {
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
+        let instructions = programmer.children[7];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
+        let pos = programmer.children[8].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
@@ -346,10 +444,10 @@ AFRAME.registerComponent('button', {
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
+        let instructions = programmer.children[7];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
+        let pos = programmer.children[8].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
@@ -375,23 +473,21 @@ AFRAME.registerComponent('button', {
         instruction.setAttribute('instruction_component', { event: 'run', type: 'Right' });
     },
 
-    //Finds all the mobiles with a specific program id
+    //Finds the program assigned to the mobile
     eventButtonHandlerRun: function() {
-        //In this exercise we only have ONE mobile
-        let mobile = document.getElementById("mobile");
+        let mobile = this.parentNode;
         let program_id = mobile.getAttribute("mobile_component").program; //id of the program that uses this mobile
-        let program = this.parentNode.getAttribute('id');
+        let box = mobile.children[0];
 
-        if (program === program_id) {
-            mobile.emit('mousedown');
+        if (program_id !== "") {
+            box.emit('mousedown');
         }
     },
 
     eventButtonHandlerDeleteInstructions: function() {
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
+        let instructions = programmer.children[7];
         let child = instructions.lastElementChild;
-
 
         while (child) {
             instructions.removeChild(child);
@@ -406,7 +502,9 @@ AFRAME.registerComponent('button', {
         let newProgramEntity = ide.children[1];
         let newProgramBox = newProgramEntity.children[0];
         let program = this.parentNode;
-        let programBox = program.children[10];
+        let programBox = program.children[8];
+        let programId = program.getAttribute('id');
+        const mobiles = Array.from(document.getElementById('mobiles-enviroment').children);
         let incremento = 3.54;
         let ideBoxPos = ideBox.getAttribute('position');
         let ideBoxPosY = ideBoxPos.y - incremento / 2;
@@ -414,52 +512,70 @@ AFRAME.registerComponent('button', {
         const children = Array.from(ide.children); //Before remove
         const ideLengthBefore = ide.children.length; //Before remove
         let num = children.indexOf(program);
-        let nextChild = num;
-        let entity, entityBox, child, pos, ideLengthAfter;
+        let changeProgramId = document.getElementById('change-program');
+        let entity, entityBox, child, pos, ideLengthAfter, mobile, plane;
 
-        //Remove program
-        ide.removeChild(program);
-        ideLengthAfter = ide.children.length;
-        if (ideLengthBefore === 3) { //Only one program
-            //Modify menu IDE
-            pos = ideBox.getAttribute('position');
-            ideBox.setAttribute('geometry', { height: String(ideHeight) });
-            pos = newProgramBox.getAttribute('position');
-            newProgramBox.setAttribute('position', { x: pos.x, y: pos.y + incremento / 2, z: pos.z });
-        } else if (ideLengthAfter >= 3) { //Two or more programs
-            while (num < ideLengthAfter) {
-                entity = ide.children[num];
-                for (let i = 0; i < entity.children.length; i++) { //each program children
-                    if (i !== 0 && i < 9) {
-                        entityBox = entity.children[i].children[0];
-                        pos = entityBox.getAttribute('position');
-                        entityBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
-                    } else if (i === 0 || i === 10) { //text and program box
-                        child = entity.children[i];
-                        pos = child.getAttribute('position');
-                        child.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+        if (changeProgramId === null) {
+            //Remove program
+            ide.removeChild(program);
+            ideLengthAfter = ide.children.length;
+            if (ideLengthBefore === 3) { //Only one program
+                //Modify menu IDE
+                pos = ideBox.getAttribute('position');
+                ideBox.setAttribute('geometry', { height: String(ideHeight) });
+                pos = newProgramBox.getAttribute('position');
+                newProgramBox.setAttribute('position', { x: pos.x, y: pos.y + incremento / 2, z: pos.z });
+            } else if (ideLengthAfter >= 3) { //Two or more programs
+                while (num < ideLengthAfter) {
+                    entity = ide.children[num];
+                    for (let i = 0; i < entity.children.length; i++) { //each program children
+                        if (i !== 0 && i < 7) {
+                            entityBox = entity.children[i].children[0];
+                            pos = entityBox.getAttribute('position');
+                            entityBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                        } else if (i === 0 || i === 8) { //text and program box
+                            child = entity.children[i];
+                            pos = child.getAttribute('position');
+                            child.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                        }
+                    }
+                    num++;
+                }
+                //Modify menu IDE
+                pos = ideBox.getAttribute('position');
+                ideBox.setAttribute('geometry', { height: String(ideHeight) });
+                ideBoxPosY = ideBoxPos.y + incremento / 2;
+                ideBox.setAttribute('position', { x: pos.x, y: ideBoxPosY, z: pos.z });
+                pos = newProgramBox.getAttribute('position');
+                //Modify botton New Program
+                num = program.getAttribute('programmer_component').position;
+                newProgramBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+            }
+            //Modify Mobiles
+            for (let i = 0; i < mobiles.length; i++) {
+                if (i > 2) {
+                    mobile = mobiles[i];
+                    if (programId === mobile.getAttribute('mobile_component').program) {
+                        mobile = mobiles[i];
+                        plane = mobile.children[3];
+                        mobile.setAttribute('mobile_component', { program: "" });
+                        plane.removeAttribute('src');
                     }
                 }
-                num++;
             }
-            //Modify menu IDE
-            pos = ideBox.getAttribute('position');
-            ideBox.setAttribute('geometry', { height: String(ideHeight) });
-            ideBoxPosY = ideBoxPos.y + incremento / 2;
-            ideBox.setAttribute('position', { x: pos.x, y: ideBoxPosY, z: pos.z });
-            pos = newProgramBox.getAttribute('position');
-            //Modify botton New Program
-            num = program.getAttribute('programmer_component').position;
-            newProgramBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
         }
 
     },
-    //WE ONLY HAVE ONE MOBILE
-    eventButtonHandlerReset: function() {
-        let mobile = document.getElementById('mobile');
-        let pos = mobile.getAttribute('mobile_component').position;
 
-        mobile.setAttribute('position', { x: pos[0], y: pos[1], z: pos[2] });
+    eventButtonHandlerReset: function() {
+        let mobile = this.parentNode;
+        let box = mobile.children[0];
+        let pos = mobile.getAttribute('mobile_component').position;
+        let posX = pos[0];
+        let posY = pos[1];
+        let posZ = pos[2];
+
+        box.setAttribute('position', { x: posX, y: posY, z: posZ });
     },
 
     eventButtonHandlerNewProgram: function() {
@@ -482,16 +598,16 @@ AFRAME.registerComponent('button', {
         let deleteInstructBox = document.createElement('a-box');
         let deleteProgEntity = document.createElement('a-entity');
         let deleteProgBox = document.createElement('a-box');
-        let runEntity = document.createElement('a-entity');
-        let runBox = document.createElement('a-box');
-        let resetEntity = document.createElement('a-entity');
-        let resetBox = document.createElement('a-box')
         let instructionsEntity = document.createElement('a-entity');
         let incremento = 3.54; //Height Programmer Menu
         let programmerPosition = ide.children.length - 1;
         let programmerId = 'programmer' + ideCount;
         let ideBoxPosY = 3 - (incremento * (programmerPosition - 1)) / 2;
         let ideHeight = 6 + incremento * (programmerPosition - 1);
+        let icons = document.getElementsByClassName('icon');
+        let programs = Array.from(ide.children);
+        let found = false;
+        let iconId, programIcon;
 
         //IDE menu
         ide.setAttribute('programming-enviroment', { count: ideCount });
@@ -501,9 +617,38 @@ AFRAME.registerComponent('button', {
         //New Program Button
         newProgramBox.setAttribute('position', { x: 2.1, y: 0.62 - incremento * (programmerPosition - 1), z: -5.45 });
 
+        if (programs.length === 2) { //There is no program
+            programmerEntity.setAttribute('programmer_component', { count: 0, position: ideCount, icon: "icon1" });
+            programmerBox.setAttribute('src', '#icon1');
+        } else { //There is at least one program
+            for (let icon of icons) {
+                iconId = icon.getAttribute('id');
+                for (let i = 0; i < programs.length; i++) {
+                    if (i > 1) {
+                        programIcon = programs[i].getAttribute('programmer_component').icon;
+                        if (iconId === programIcon) { //found
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) {
+                    programmerEntity.setAttribute('programmer_component', { count: 0, position: ideCount, icon: iconId });
+                    iconId = '#' + iconId;
+                    programmerBox.setAttribute('src', iconId);
+                    break;
+                } else { //This icon is being used. We have to keep searching for one unused
+                    found = false;
+                }
+            }
+
+
+        }
+
+
         //Next program menu
         programmerEntity.appendChild(text);
-        programmerEntity.setAttribute('programmer_component', { count: 0, position: ideCount });
+        //programmerEntity.setAttribute('programmer_component', { count: 0, position: ideCount, icon: iconId});
         programmerEntity.setAttribute('id', programmerId);
         ide.appendChild(programmerEntity);
 
@@ -560,32 +705,169 @@ AFRAME.registerComponent('button', {
         deleteProgBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
         deleteProgBox.setAttribute('src', "#delete_program_button");
 
-
-        //Run Button
-        programmerEntity.appendChild(runEntity);
-        runEntity.appendChild(runBox);
-        runEntity.setAttribute('button', { text: 'Run' });
-        runBox.setAttribute('position', { x: 3, y: 2 - incremento * (programmerPosition - 1), z: -5.45 });
-        runBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        runBox.setAttribute('src', "#run_button");
-
-        //Reset Button
-        programmerEntity.appendChild(resetEntity);
-        resetEntity.appendChild(resetBox);
-        resetEntity.setAttribute('button', { text: 'Reset' });
-        resetBox.setAttribute('position', { x: 4.5, y: 2 - incremento * (programmerPosition - 1), z: -5.45 });
-        resetBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        resetBox.setAttribute('src', "#reset_button");
-
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
         instructionsEntity.setAttribute('instructions');
-        //instructionsEntity.setAttribute('id','instructions');
 
         programmerEntity.appendChild(programmerBox);
         programmerBox.setAttribute('position', { x: 2.1, y: 3 - incremento * (programmerPosition - 1), z: -5.85 });
-        programmerBox.setAttribute('color', "brown");
+        //programmerBox.setAttribute('color', "brown");
         programmerBox.setAttribute('geometry', { width: '6', height: "3.5", depth: "0.5" });
+    },
+
+    eventButtonHandlerNewMobile: function() {
+        let mobiles = document.getElementById('mobiles-enviroment');
+        let mobilesCount = mobiles.getAttribute('mobiles').count + 1;
+        let mobilesBox = mobiles.children[0];
+        let mobilesText = document.createElement('a-text');
+        let mobileEntity = document.createElement('a-entity');
+        let mobileMenu = document.createElement('a-box');
+        let mobileBox = document.createElement('a-box');
+        let mobileText = document.createElement('a-text');
+        let mobileId = 'mobile' + mobilesCount;
+        let plane = document.createElement('a-plane');
+        let runEntity = document.createElement('a-entity');
+        let runBox = document.createElement('a-box');
+        let resetEntity = document.createElement('a-entity');
+        let resetBox = document.createElement('a-box');
+        let newMobileEntity = mobiles.children[2];
+        let newMobileBox = newMobileEntity.children[0];
+        let programEntity = document.createElement('a-entity');
+        let programBox = document.createElement('a-box');
+        let incremento = 3.54; //Height Programmer Menu
+        let mobilePosition = mobiles.children.length - 2;
+        let mobileBoxPosY = 3 - (incremento * (mobilePosition - 1)) / 2;
+        let mobileHeight = 6 + incremento * (mobilePosition - 1);
+
+        //New Mobile box
+        mobileBox.setAttribute('position', { x: -2 - (incremento * (mobilePosition - 1)), y: 0.5, z: -6 });
+        mobileBox.setAttribute('src', "#tejado");
+        mobileEntity.appendChild(mobileBox);
+
+        //Mobiles menu
+        mobiles.setAttribute('mobiles', { count: mobilesCount });
+        mobilesBox.setAttribute('position', { x: -6, y: mobileBoxPosY, z: 5 });
+        mobilesBox.setAttribute('geometry', { width: '6.5', height: String(mobileHeight), depth: "0.5" });
+
+        //New  mobile button
+        newMobileBox.setAttribute('position', { x: -5.65, y: 0.65 - incremento * (mobilePosition - 1), z: 5 });
+
+        //Next mobile menu
+        mobileEntity.appendChild(mobileMenu);
+        mobileEntity.setAttribute('mobile_component', { program: '' });
+        mobileEntity.setAttribute('id', mobileId);
+        mobileMenu.setAttribute('position', { x: -5.9, y: 3 - (incremento * (mobilePosition - 1)), z: 5 });
+        mobileMenu.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        mobileMenu.setAttribute('color', 'brown');
+        mobileMenu.setAttribute('geometry', { width: '6', height: "3.5", depth: "0.5" });
+        mobiles.appendChild(mobileEntity);
+
+        //Text mobile menu
+        mobileEntity.appendChild(mobileText);
+        mobileText.setAttribute('position', { x: -5.6, y: 4.4 - incremento * (mobilePosition - 1), z: 6.6 });
+        mobileText.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        mobileText.setAttribute('scale', { x: 2.5, y: 2, z: 0.5 });
+        mobileText.setAttribute('text', { value: 'MOBILE', color: 'white', width: '7' });
+
+        //Plane program used
+        mobileEntity.appendChild(plane);
+        plane.setAttribute('position', { x: -5.6, y: 4.4 - incremento * (mobilePosition - 1), z: 3 });
+        plane.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        plane.setAttribute('geometry', { width: '0.5', height: "0.5" });
+
+        //Run Button
+        mobileEntity.appendChild(runEntity);
+        runEntity.appendChild(runBox);
+        runEntity.setAttribute('button', { text: 'Run' });
+        runBox.setAttribute('position', { x: -5.65, y: 3.3 - incremento * (mobilePosition - 1), z: 3.5 });
+        runBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        runBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        runBox.setAttribute('src', "#run_button");
+
+        //Reset Button
+        mobileEntity.appendChild(resetEntity);
+        resetEntity.appendChild(resetBox);
+        resetEntity.setAttribute('button', { text: 'Reset' });
+        resetBox.setAttribute('position', { x: -5.65, y: 2 - incremento * (mobilePosition - 1), z: 3.5 });
+        resetBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        resetBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        resetBox.setAttribute('src', "#reset_button");
+
+        //Program Button
+        mobileEntity.appendChild(programEntity);
+        programEntity.appendChild(programBox);
+        programEntity.setAttribute('button', { text: 'Program' });
+        programBox.setAttribute('position', { x: -5.65, y: 3.3 - incremento * (mobilePosition - 1), z: 6.4 });
+        programBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        programBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        programBox.setAttribute('src', "#program_button");
+
+    },
+
+    eventButtonHandlerProgram: function() {
+        let mobile = this.parentNode;
+        let mobileId = mobile.getAttribute('id');
+        let mobileNum = mobileId.slice(6);
+        let menuEntity = document.createElement('a-entity');
+        let menuBox = document.createElement('a-box');
+        let menuHeight = 0;
+        let ide = document.getElementById('programming-enviroment');
+        let programs = Array.from(ide.children);
+        let programsNum = 0;
+        let changeProgramId = document.getElementById('change-program');
+        let program, programIcon, programEntity, programBox;
+
+
+        if (programs.length > 2 && changeProgramId === null) { //Al least there is a program
+            mobile.appendChild(menuEntity);
+            menuEntity.appendChild(menuBox);
+            menuEntity.setAttribute('id', 'change-program');
+            menuBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+            menuBox.setAttribute('color', 'brown');
+
+            for (let i = 0; i < programs.length; i++) {
+                if (i > 1) {
+                    programsNum++;
+                    program = programs[i];
+                    programIcon = '#' + program.getAttribute('programmer_component').icon;
+                    programEntity = document.createElement('a-entity');
+                    programBox = document.createElement('a-box');
+                    programEntity.appendChild(programBox);
+                    menuEntity.appendChild(programEntity);
+                    programEntity.setAttribute('button', { text: 'Change Program' });
+                    programBox.setAttribute('position', { x: -5.6, y: 5 - (2 * (programsNum - 1)), z: 10 });
+                    programBox.setAttribute('src', programIcon);
+                }
+            }
+            menuHeight = 2 * programsNum;
+            menuBox.setAttribute('geometry', { width: '2', height: String(menuHeight), depth: "0.5" });
+            menuBox.setAttribute('position', { x: -5.9, y: 5 - ((programsNum - 1)), z: 10 });
+        }
+    },
+
+    eventButtonHandlerChangeProgram: function() {
+        let changeProgramMenu = this.parentNode;
+        let buttonSrc = this.children[0].getAttribute('src');
+        let icon = buttonSrc.slice(1);
+        let ide = document.getElementById('programming-enviroment');
+        let programs = Array.from(ide.children);
+        let mobile = changeProgramMenu.parentNode;
+        let programId, mobilePlane;
+
+        for (let i = 0; i < programs.length; i++) {
+            if (i > 1) {
+                program = programs[i];
+                if (icon === program.getAttribute('programmer_component').icon) {
+                    programId = program.getAttribute('id');
+                    mobilePlane = mobile.children[3];
+                    mobile.setAttribute('mobile_component', { program: programId });
+                    mobilePlane.setAttribute('src', buttonSrc);
+                    break;
+                }
+            }
+        }
+        //Remove Change Program Menu
+        mobile.removeChild(changeProgramMenu);
     }
 
 });
