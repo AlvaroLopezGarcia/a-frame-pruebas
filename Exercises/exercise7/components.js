@@ -26,6 +26,10 @@ AFRAME.registerComponent('programming-enviroment', {
         let deleteProgBox = document.createElement('a-box');
         let instructionsEntity = document.createElement('a-entity');
         let programmerId = 'programmer';
+        let forwardEntity = document.createElement('a-entity');
+        let forwardBox = document.createElement('a-box');
+        let backEntity = document.createElement('a-entity');
+        let backBox = document.createElement('a-box');
 
         //IDE menu
         ide.appendChild(ideBox);
@@ -92,7 +96,7 @@ AFRAME.registerComponent('programming-enviroment', {
         programmerEntity.appendChild(deleteInstructEntity);
         deleteInstructEntity.appendChild(deleteInstructBox);
         deleteInstructEntity.setAttribute('button', { text: 'Delete Instructions' });
-        deleteInstructBox.setAttribute('position', { x: 3, y: 3.25, z: -5.45 });
+        deleteInstructBox.setAttribute('position', { x: 4.5, y: 2, z: -5.45 });
         deleteInstructBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
         deleteInstructBox.setAttribute('src', "#delete_instructions_button");
 
@@ -103,6 +107,22 @@ AFRAME.registerComponent('programming-enviroment', {
         deleteProgBox.setAttribute('position', { x: 4.5, y: 3.25, z: -5.45 });
         deleteProgBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
         deleteProgBox.setAttribute('src', "#delete_program_button");
+
+        //Forward button
+        programmerEntity.appendChild(forwardEntity);
+        forwardEntity.appendChild(forwardBox);
+        forwardEntity.setAttribute('button', { text: 'Forward' });
+        forwardBox.setAttribute('position', { x: 2.75, y: 3.25, z: -5.45 });
+        forwardBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
+        //forwardBox.setAttribute('src', "#forward_button");
+
+        //Back button
+        programmerEntity.appendChild(backEntity);
+        backEntity.appendChild(backBox);
+        backEntity.setAttribute('button', { text: 'Back' });
+        backBox.setAttribute('position', { x: 2.75, y: 2, z: -5.45 });
+        backBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
+        //backBox.setAttribute('src', "#back_button");
 
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
@@ -141,7 +161,7 @@ AFRAME.registerComponent('mobile_component', {
 
     eventMobileHandlerMouseDown: function() {
         let program_id = this.parentNode.getAttribute("mobile_component").program;
-        let instructions = document.getElementById(program_id).children[7].children;
+        let instructions = document.getElementById(program_id).children[9].children;
         let mobile = this.parentNode;
 
         for (let instruction of instructions) {
@@ -174,6 +194,8 @@ AFRAME.registerComponent('mobiles', {
         let newMobileBox = document.createElement('a-box');
         let programEntity = document.createElement('a-entity');
         let programBox = document.createElement('a-box');
+        let deleteMobileEntity = document.createElement('a-entity');
+        let deleteMobileBox = document.createElement('a-box');
 
         //Mobile box
         mobileBox.setAttribute('position', { x: -2, y: 0.5, z: -6 });
@@ -225,7 +247,6 @@ AFRAME.registerComponent('mobiles', {
 
         //Plane program used
         mobileEntity.appendChild(plane);
-        //plane.setAttribute('color', 'white');
         plane.setAttribute('src', '#icon1');
         plane.setAttribute('position', { x: -5.6, y: 4.4, z: 3 });
         plane.setAttribute('rotation', { x: 0, y: 90, z: 0 });
@@ -257,6 +278,15 @@ AFRAME.registerComponent('mobiles', {
         programBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         programBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         programBox.setAttribute('src', "#program_button");
+
+        //Delete Mobile Button
+        mobileEntity.appendChild(deleteMobileEntity);
+        deleteMobileEntity.appendChild(deleteMobileBox);
+        deleteMobileEntity.setAttribute('button', { text: 'Delete Mobile' });
+        deleteMobileBox.setAttribute('position', { x: -5.65, y: 2, z: 6.4 });
+        deleteMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        deleteMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        //deleteMobileBox.setAttribute('src', "#delete_mobile_button");
     },
 });
 
@@ -289,6 +319,10 @@ AFRAME.registerComponent('instruction_component', {
                 box.setAttribute('position', { x: pos.x - 1, y: pos.y, z: pos.z });
             } else if (this.getAttribute("instruction_component").type === 'Right') {
                 box.setAttribute('position', { x: pos.x + 1, y: pos.y, z: pos.z });
+            } else if (this.getAttribute("instruction_component").type === 'Forward') {
+                box.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z + 1 });
+            } else if (this.getAttribute("instruction_component").type === 'Back') {
+                box.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z - 1 });
             }
         }
     },
@@ -334,23 +368,86 @@ AFRAME.registerComponent('button', {
             this.el.addEventListener("click", this.eventButtonHandlerProgram);
         } else if (this.data.text === 'Change Program') {
             this.el.addEventListener("click", this.eventButtonHandlerChangeProgram);
+        } else if (this.data.text === 'Delete Mobile') {
+            this.el.addEventListener("click", this.eventButtonHandlerDeleteMobile);
+        } else if (this.data.text === 'Forward') {
+            this.el.addEventListener("click", this.eventButtonHandlerForward);
+        } else if (this.data.text === 'Back') {
+            this.el.addEventListener("click", this.eventButtonHandlerBack);
         }
     },
 
-    eventButtonHandlerUp: function() {
-        //e.stopPropagation();
+    eventButtonHandlerBack: function() {
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[7];
+        let instructions = programmer.children[9];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[8].getAttribute("position");
+        let pos = programmer.children[10].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
-        //let instruction_id = "instruction" + instruction_num;
 
+        if (instruction_num === 0) {
+            pos_x = pos.x + 5 * (programmer_num);
+            pos_y = 0.5;
+        } else {
+            pos = instructions.lastChild.children[0].getAttribute("position");
+            pos_x = pos.x;
+            pos_y = pos.y + 0.55;
+        }
+        instructions.appendChild(instruction);
+        instruction.appendChild(box);
+        instruction_num += incremento;
+        programmer.setAttribute('programmer_component', { count: instruction_num });
+        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
+        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
+        box.setAttribute('src', "#back_instruction");
+        instruction.setAttribute('instruction_component', { event: 'run', type: 'Back' });
+    },
+
+    eventButtonHandlerForward: function() {
+        let instruction = document.createElement('a-entity');
+        let box = document.createElement('a-box');
+        let programmer = this.parentNode;
+        let instructions = programmer.children[9];
+        let instruction_num = programmer.getAttribute('programmer_component').count;
+        let programmer_num = programmer.getAttribute('programmer_component').position;
+        let pos = programmer.children[10].getAttribute("position");
+        let pos_x = 0;
+        let pos_y = 0;
+        let incremento = 1;
+
+        if (instruction_num === 0) {
+            pos_x = pos.x + 5 * (programmer_num);
+            pos_y = 0.5;
+        } else {
+            pos = instructions.lastChild.children[0].getAttribute("position");
+            pos_x = pos.x;
+            pos_y = pos.y + 0.55;
+        }
+        instructions.appendChild(instruction);
+        instruction.appendChild(box);
+        instruction_num += incremento;
+        programmer.setAttribute('programmer_component', { count: instruction_num });
+        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
+        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
+        box.setAttribute('src', "#forward_instruction");
+        instruction.setAttribute('instruction_component', { event: 'run', type: 'Forward' });
+    },
+
+    eventButtonHandlerUp: function() {
+        let instruction = document.createElement('a-entity');
+        let box = document.createElement('a-box');
+        let programmer = this.parentNode;
+        let instructions = programmer.children[9];
+        let instruction_num = programmer.getAttribute('programmer_component').count;
+        let programmer_num = programmer.getAttribute('programmer_component').position;
+        let pos = programmer.children[10].getAttribute("position");
+        let pos_x = 0;
+        let pos_y = 0;
+        let incremento = 1;
 
         if (instruction_num === 0) {
             pos_x = pos.x + 5 * (programmer_num);
@@ -367,24 +464,20 @@ AFRAME.registerComponent('button', {
         box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
         box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
         box.setAttribute('src', "#up_instruction");
-        //instruction.setAttribute('id',instruction_id);
         instruction.setAttribute('instruction_component', { event: 'run', type: 'Up' });
     },
 
     eventButtonHandlerDown: function() {
-        //e.stopPropagation();
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[7];
+        let instructions = programmer.children[9];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[8].getAttribute("position");
+        let pos = programmer.children[10].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
-        //let instruction_id = "instruction" + instruction_num;
-
 
         if (instruction_num === 0) {
             pos_x = pos.x + 5 * (programmer_num);
@@ -401,24 +494,20 @@ AFRAME.registerComponent('button', {
         box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
         box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
         box.setAttribute('src', "#down_instruction");
-        //instruction.setAttribute('id',instruction_id);
         instruction.setAttribute('instruction_component', { event: 'run', type: 'Down' });
     },
 
     eventButtonHandlerLeft: function() {
-        //e.stopPropagation();
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[7];
+        let instructions = programmer.children[9];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[8].getAttribute("position");
+        let pos = programmer.children[10].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
-        //let instruction_id = "instruction" + instruction_num;
-
 
         if (instruction_num === 0) {
             pos_x = pos.x + 5 * (programmer_num);
@@ -435,24 +524,20 @@ AFRAME.registerComponent('button', {
         box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
         box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
         box.setAttribute('src', "#left_instruction");
-        //instruction.setAttribute('id',instruction_id);
         instruction.setAttribute('instruction_component', { event: 'run', type: 'Left' });
     },
 
     eventButtonHandlerRight: function() {
-        //e.stopPropagation();
         let instruction = document.createElement('a-entity');
         let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[7];
+        let instructions = programmer.children[9];
         let instruction_num = programmer.getAttribute('programmer_component').count;
         let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[8].getAttribute("position");
+        let pos = programmer.children[10].getAttribute("position");
         let pos_x = 0;
         let pos_y = 0;
         let incremento = 1;
-        //let instruction_id = "instruction" + instruction_num;
-
 
         if (instruction_num === 0) {
             pos_x = pos.x + 5 * (programmer_num);
@@ -469,7 +554,6 @@ AFRAME.registerComponent('button', {
         box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
         box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
         box.setAttribute('src', "#right_instruction");
-        //instruction.setAttribute('id',instruction_id);
         instruction.setAttribute('instruction_component', { event: 'run', type: 'Right' });
     },
 
@@ -486,7 +570,7 @@ AFRAME.registerComponent('button', {
 
     eventButtonHandlerDeleteInstructions: function() {
         let programmer = this.parentNode;
-        let instructions = programmer.children[7];
+        let instructions = programmer.children[9];
         let child = instructions.lastElementChild;
 
         while (child) {
@@ -502,7 +586,7 @@ AFRAME.registerComponent('button', {
         let newProgramEntity = ide.children[1];
         let newProgramBox = newProgramEntity.children[0];
         let program = this.parentNode;
-        let programBox = program.children[8];
+        let programBox = program.children[10];
         let programId = program.getAttribute('id');
         const mobiles = Array.from(document.getElementById('mobiles-enviroment').children);
         let incremento = 3.54;
@@ -529,11 +613,11 @@ AFRAME.registerComponent('button', {
                 while (num < ideLengthAfter) {
                     entity = ide.children[num];
                     for (let i = 0; i < entity.children.length; i++) { //each program children
-                        if (i !== 0 && i < 7) {
+                        if (i !== 0 && i < 9) {
                             entityBox = entity.children[i].children[0];
                             pos = entityBox.getAttribute('position');
                             entityBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
-                        } else if (i === 0 || i === 8) { //text and program box
+                        } else if (i === 0 || i === 10) { //text and program box
                             child = entity.children[i];
                             pos = child.getAttribute('position');
                             child.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
@@ -599,6 +683,10 @@ AFRAME.registerComponent('button', {
         let deleteProgEntity = document.createElement('a-entity');
         let deleteProgBox = document.createElement('a-box');
         let instructionsEntity = document.createElement('a-entity');
+        let forwardEntity = document.createElement('a-entity');
+        let forwardBox = document.createElement('a-box');
+        let backEntity = document.createElement('a-entity');
+        let backBox = document.createElement('a-box');
         let incremento = 3.54; //Height Programmer Menu
         let programmerPosition = ide.children.length - 1;
         let programmerId = 'programmer' + ideCount;
@@ -693,7 +781,7 @@ AFRAME.registerComponent('button', {
         programmerEntity.appendChild(deleteInstructEntity);
         deleteInstructEntity.appendChild(deleteInstructBox);
         deleteInstructEntity.setAttribute('button', { text: 'Delete Instructions' });
-        deleteInstructBox.setAttribute('position', { x: 3, y: 3.25 - incremento * (programmerPosition - 1), z: -5.45 });
+        deleteInstructBox.setAttribute('position', { x: 4.5, y: 2 - incremento * (programmerPosition - 1), z: -5.45 });
         deleteInstructBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
         deleteInstructBox.setAttribute('src', "#delete_instructions_button");
 
@@ -704,6 +792,22 @@ AFRAME.registerComponent('button', {
         deleteProgBox.setAttribute('position', { x: 4.5, y: 3.25 - incremento * (programmerPosition - 1), z: -5.45 });
         deleteProgBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
         deleteProgBox.setAttribute('src', "#delete_program_button");
+
+        //Forward button
+        programmerEntity.appendChild(forwardEntity);
+        forwardEntity.appendChild(forwardBox);
+        forwardEntity.setAttribute('button', { text: 'Forward' });
+        forwardBox.setAttribute('position', { x: 2.75, y: 3.25 - incremento * (programmerPosition - 1), z: -5.45 });
+        forwardBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
+        //forwardBox.setAttribute('src', "#forward_button");
+
+        //Back button
+        programmerEntity.appendChild(backEntity);
+        backEntity.appendChild(backBox);
+        backEntity.setAttribute('button', { text: 'Back' });
+        backBox.setAttribute('position', { x: 2.75, y: 2 - incremento * (programmerPosition - 1), z: -5.45 });
+        backBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
+        //backBox.setAttribute('src', "#back_button");
 
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
@@ -719,7 +823,7 @@ AFRAME.registerComponent('button', {
         let mobiles = document.getElementById('mobiles-enviroment');
         let mobilesCount = mobiles.getAttribute('mobiles').count + 1;
         let mobilesBox = mobiles.children[0];
-        let mobilesText = document.createElement('a-text');
+        //let mobilesText = document.createElement('a-text');
         let mobileEntity = document.createElement('a-entity');
         let mobileMenu = document.createElement('a-box');
         let mobileBox = document.createElement('a-box');
@@ -738,9 +842,12 @@ AFRAME.registerComponent('button', {
         let mobilePosition = mobiles.children.length - 2;
         let mobileBoxPosY = 3 - (incremento * (mobilePosition - 1)) / 2;
         let mobileHeight = 6 + incremento * (mobilePosition - 1);
+        let deleteMobileEntity = document.createElement('a-entity');
+        let deleteMobileBox = document.createElement('a-box');
+
 
         //New Mobile box
-        mobileBox.setAttribute('position', { x: -2 - (incremento * (mobilePosition - 1)), y: 0.5, z: -6 });
+        mobileBox.setAttribute('position', { x: -2 - (incremento * (mobilesCount - 1)), y: 0.5, z: -6 });
         mobileBox.setAttribute('src', "#tejado");
         mobileEntity.appendChild(mobileBox);
 
@@ -802,6 +909,14 @@ AFRAME.registerComponent('button', {
         programBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         programBox.setAttribute('src', "#program_button");
 
+        //Delete Mobile Button
+        mobileEntity.appendChild(deleteMobileEntity);
+        deleteMobileEntity.appendChild(deleteMobileBox);
+        deleteMobileEntity.setAttribute('button', { text: 'Delete Mobile' });
+        deleteMobileBox.setAttribute('position', { x: -5.65, y: 2 - incremento * (mobilePosition - 1), z: 6.4 });
+        deleteMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
+        deleteMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
+        //deleteMobileBox.setAttribute('src', "#delete_mobile_button");
     },
 
     eventButtonHandlerProgram: function() {
@@ -868,6 +983,53 @@ AFRAME.registerComponent('button', {
         }
         //Remove Change Program Menu
         mobile.removeChild(changeProgramMenu);
+    },
+
+    eventButtonHandlerDeleteMobile: function() {
+        console.log('Estoy en eventButtonHandlerDeleteMobile');
+        let mobiles = document.getElementById('mobiles-enviroment');
+        let mobilesChildren = Array.from(mobiles.children);
+        let mobile = this.parentNode;
+        let incremento = 3.54;
+        let mobileBoxHeight = incremento;
+        let num = mobilesChildren.indexOf(mobile);
+        let mobilesChild, pos, mobileChild, newProgramBox, buttonBox;
+
+        //Remove mobile
+        mobiles.removeChild(mobile);
+
+        //Modify mobile-enviroment
+        for (let i = 0; i < mobilesChildren.length; i++) {
+            if (i !== 1) { //The text "Mobiles" is not modified
+                mobilesChild = mobilesChildren[i];
+                if (i === 0) { //Modify mobiles box
+                    pos = mobilesChild.getAttribute('position');
+                    mobileBoxHeight = mobilesChild.getAttribute('geometry').height - incremento;
+                    mobilesChild.setAttribute('position', { x: pos.x, y: pos.y + (incremento / 2), z: pos.z });
+                    mobilesChild.setAttribute('geometry', { height: String(mobileBoxHeight) });
+                } else if (i === 2) { //Modify new mobile box
+                    newProgramBox = mobilesChild.children[0];
+                    pos = newProgramBox.getAttribute('position');
+                    newProgramBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                } else if (i > num) { //Modify each mobile
+                    for (let j = 0; j < mobilesChild.children.length; j++) {
+                        if (j !== 0) {
+                            mobileChild = mobilesChild.children[j];
+                            if (j < 4) {
+                                pos = mobileChild.getAttribute('position');
+                                mobileChild.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                            } else {
+                                buttonBox = mobileChild.children[0];
+                                pos = buttonBox.getAttribute('position');
+                                buttonBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+
     }
 
 });
