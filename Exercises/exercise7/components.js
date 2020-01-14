@@ -49,7 +49,6 @@ AFRAME.registerComponent('programming-enviroment', {
 
         //First program menu
         programmerEntity.appendChild(text);
-        //programmerEntity.setAttribute('programmer_component', {count: 0, position: ide.children.length-1});
         programmerEntity.setAttribute('programmer_component', { position: ide.children.length - 1, icon: "icon1" });
         programmerId += ide.children.length - 1;
         programmerEntity.setAttribute('id', programmerId);
@@ -114,7 +113,7 @@ AFRAME.registerComponent('programming-enviroment', {
         forwardEntity.setAttribute('button', { text: 'Forward' });
         forwardBox.setAttribute('position', { x: 2.75, y: 3.25, z: -5.45 });
         forwardBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        //forwardBox.setAttribute('src', "#forward_button");
+        forwardBox.setAttribute('src', "#forward_button");
 
         //Back button
         programmerEntity.appendChild(backEntity);
@@ -122,7 +121,7 @@ AFRAME.registerComponent('programming-enviroment', {
         backEntity.setAttribute('button', { text: 'Back' });
         backBox.setAttribute('position', { x: 2.75, y: 2, z: -5.45 });
         backBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        //backBox.setAttribute('src', "#back_button");
+        backBox.setAttribute('src', "#back_button");
 
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
@@ -286,7 +285,7 @@ AFRAME.registerComponent('mobiles', {
         deleteMobileBox.setAttribute('position', { x: -5.65, y: 2, z: 6.4 });
         deleteMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         deleteMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
-        //deleteMobileBox.setAttribute('src', "#delete_mobile_button");
+        deleteMobileBox.setAttribute('src', "#delete_mobile_button");
     },
 });
 
@@ -736,7 +735,6 @@ AFRAME.registerComponent('button', {
 
         //Next program menu
         programmerEntity.appendChild(text);
-        //programmerEntity.setAttribute('programmer_component', { count: 0, position: ideCount, icon: iconId});
         programmerEntity.setAttribute('id', programmerId);
         ide.appendChild(programmerEntity);
 
@@ -799,7 +797,7 @@ AFRAME.registerComponent('button', {
         forwardEntity.setAttribute('button', { text: 'Forward' });
         forwardBox.setAttribute('position', { x: 2.75, y: 3.25 - incremento * (programmerPosition - 1), z: -5.45 });
         forwardBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        //forwardBox.setAttribute('src', "#forward_button");
+        forwardBox.setAttribute('src', "#forward_button");
 
         //Back button
         programmerEntity.appendChild(backEntity);
@@ -807,7 +805,7 @@ AFRAME.registerComponent('button', {
         backEntity.setAttribute('button', { text: 'Back' });
         backBox.setAttribute('position', { x: 2.75, y: 2 - incremento * (programmerPosition - 1), z: -5.45 });
         backBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        //backBox.setAttribute('src', "#back_button");
+        backBox.setAttribute('src', "#back_button");
 
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
@@ -815,7 +813,6 @@ AFRAME.registerComponent('button', {
 
         programmerEntity.appendChild(programmerBox);
         programmerBox.setAttribute('position', { x: 2.1, y: 3 - incremento * (programmerPosition - 1), z: -5.85 });
-        //programmerBox.setAttribute('color', "brown");
         programmerBox.setAttribute('geometry', { width: '6', height: "3.5", depth: "0.5" });
     },
 
@@ -916,7 +913,7 @@ AFRAME.registerComponent('button', {
         deleteMobileBox.setAttribute('position', { x: -5.65, y: 2 - incremento * (mobilePosition - 1), z: 6.4 });
         deleteMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         deleteMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
-        //deleteMobileBox.setAttribute('src', "#delete_mobile_button");
+        deleteMobileBox.setAttribute('src', "#delete_mobile_button");
     },
 
     eventButtonHandlerProgram: function() {
@@ -986,7 +983,6 @@ AFRAME.registerComponent('button', {
     },
 
     eventButtonHandlerDeleteMobile: function() {
-        console.log('Estoy en eventButtonHandlerDeleteMobile');
         let mobiles = document.getElementById('mobiles-enviroment');
         let mobilesChildren = Array.from(mobiles.children);
         let mobile = this.parentNode;
