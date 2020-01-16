@@ -969,40 +969,45 @@ AFRAME.registerComponent('button', {
 
     eventButtonHandlerDeleteMobile: function() {
         let mobiles = document.getElementById('mobiles-enviroment');
+        let mobilesBox = mobiles.children[0];
         let mobilesChildren = Array.from(mobiles.children);
         let mobile = this.parentNode;
-        let incremento = 3.54;
-        let mobileBoxHeight = incremento;
+        let mobileBox = mobile.children[1];
+        let incremento = mobileBox.getAttribute('geometry').width + 0.4; //Width Programmer Menu
+        let mobilesBoxWidth = mobilesBox.getAttribute('geometry').width - mobileBox.getAttribute('geometry').width - 0.4;;
         let num = mobilesChildren.indexOf(mobile);
-        let mobilesChild, pos, mobileChild, newProgramBox, buttonBox;
+        let mobilesChild, pos, mobileChild, buttonBox;
 
         //Remove mobile
         mobiles.removeChild(mobile);
+        mobilesChildren = Array.from(mobiles.children);
 
         //Modify mobile-enviroment
         for (let i = 0; i < mobilesChildren.length; i++) {
             if (i !== 1) { //The text "Mobiles" is not modified
                 mobilesChild = mobilesChildren[i];
-                if (i === 0) { //Modify mobiles box
+                if (i === 0 && mobiles.children.length > 3) { //Modify mobiles box
                     pos = mobilesChild.getAttribute('position');
-                    mobileBoxHeight = mobilesChild.getAttribute('geometry').height - incremento;
-                    mobilesChild.setAttribute('position', { x: pos.x, y: pos.y + (incremento / 2), z: pos.z });
-                    mobilesChild.setAttribute('geometry', { height: String(mobileBoxHeight) });
-                } else if (i === 2) { //Modify new mobile box
-                    newProgramBox = mobilesChild.children[0];
-                    pos = newProgramBox.getAttribute('position');
-                    newProgramBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
-                } else if (i > num) { //Modify each mobile
+                    mobilesBoxWidth = mobilesChild.getAttribute('geometry').width - incremento;
+                    mobilesChild.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z - (incremento / 2) });
+                    mobilesChild.setAttribute('geometry', { width: String(mobilesBoxWidth) });
+                }
+                /*else if (i === 2) { //Modify new mobile box
+                                   newProgramBox = mobilesChild.children[0];
+                                   pos = newProgramBox.getAttribute('position');
+                                   newProgramBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                               }*/
+                else if (i >= num) { //Modify each mobile
                     for (let j = 0; j < mobilesChild.children.length; j++) {
                         if (j !== 0) {
                             mobileChild = mobilesChild.children[j];
                             if (j < 4) {
                                 pos = mobileChild.getAttribute('position');
-                                mobileChild.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                                mobileChild.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z - incremento });
                             } else {
                                 buttonBox = mobileChild.children[0];
                                 pos = buttonBox.getAttribute('position');
-                                buttonBox.setAttribute('position', { x: pos.x, y: pos.y + incremento, z: pos.z });
+                                buttonBox.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z - incremento });
                             }
                         }
                     }
