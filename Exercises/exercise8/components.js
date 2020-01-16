@@ -907,7 +907,7 @@ AFRAME.registerComponent('button', {
         let mobileNum = mobileId.slice(6);
         let menuEntity = document.createElement('a-entity');
         let menuBox = document.createElement('a-box');
-        let menuHeight = 0;
+        let menuWidth = 0;
         let ide = document.getElementById('programming-enviroment');
         let programs = Array.from(ide.children);
         let programsNum = 0;
@@ -932,13 +932,13 @@ AFRAME.registerComponent('button', {
                     programEntity.appendChild(programBox);
                     menuEntity.appendChild(programEntity);
                     programEntity.setAttribute('button', { text: 'Change Program' });
-                    programBox.setAttribute('position', { x: -5.6, y: 5 - (2 * (programsNum - 1)), z: 10 });
+                    programBox.setAttribute('position', { x: -5.6, y: 8, z: 10 + (2 * (programsNum - 1)) });
                     programBox.setAttribute('src', programIcon);
                 }
             }
-            menuHeight = 2 * programsNum;
-            menuBox.setAttribute('geometry', { width: '2', height: String(menuHeight), depth: "0.5" });
-            menuBox.setAttribute('position', { x: -5.9, y: 5 - ((programsNum - 1)), z: 10 });
+            menuWidth = 2 * programsNum;
+            menuBox.setAttribute('geometry', { width: String(menuWidth), height: '2', depth: "0.5" });
+            menuBox.setAttribute('position', { x: -5.9, y: 8, z: 10 + ((programsNum - 1)) });
         }
     },
 
