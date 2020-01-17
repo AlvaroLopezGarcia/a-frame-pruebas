@@ -147,6 +147,7 @@ AFRAME.registerComponent('mobile_component', {
         event: { type: 'string', default: 'mousedown' },
         program: { type: 'string', default: '' },
         position: { type: 'array', default: [] }, //origin position
+        object: { type: 'string', default: '' },
     },
 
     init: function() {
@@ -181,7 +182,7 @@ AFRAME.registerComponent('mobiles', {
         let mobilesText = document.createElement('a-text');
         let mobileEntity = document.createElement('a-entity');
         let mobileMenu = document.createElement('a-box');
-        let mobileBox = document.createElement('a-box');
+        let mobileObject = document.createElement('a-entity');
         let mobileText = document.createElement('a-text');
         let mobileId = 'mobile';
         let plane = document.createElement('a-plane');
@@ -196,10 +197,13 @@ AFRAME.registerComponent('mobiles', {
         let deleteMobileEntity = document.createElement('a-entity');
         let deleteMobileBox = document.createElement('a-box');
 
-        //Mobile box
-        mobileBox.setAttribute('position', { x: -2, y: 0.5, z: -6 });
-        mobileBox.setAttribute('src', "#tejado");
-        mobileEntity.appendChild(mobileBox);
+        //Mobile object
+        mobileObject.setAttribute('position', { x: -3, y: 1, z: -6 });
+        mobileObject.setAttribute('scale', { x: 0.01, y: 0.01, z: 0.01 });
+        mobileObject.setAttribute('gltf-model', "#object1");
+        mobileObject.setAttribute('animation-mixer', '');
+        mobileEntity.appendChild(mobileObject);
+
 
         //Mobiles menu
         mobiles.appendChild(mobilesBox);
@@ -228,7 +232,7 @@ AFRAME.registerComponent('mobiles', {
 
         //Firt mobile menu
         mobileEntity.appendChild(mobileMenu);
-        mobileEntity.setAttribute('mobile_component', { program: 'programmer1' });
+        mobileEntity.setAttribute('mobile_component', { program: 'programmer1', object: 'object1' });
         mobileId += mobiles.children.length - 2;
         mobileEntity.setAttribute('id', mobileId);
         mobileMenu.setAttribute('position', { x: -5.9, y: 3, z: 5 });
@@ -808,7 +812,7 @@ AFRAME.registerComponent('button', {
         //let mobilesText = document.createElement('a-text');
         let mobileEntity = document.createElement('a-entity');
         let mobileMenu = document.createElement('a-box');
-        let mobileBox = document.createElement('a-box');
+        let mobileObject = document.createElement('a-entity');
         let mobileText = document.createElement('a-text');
         let mobileId = 'mobile' + mobilesCount;
         let plane = document.createElement('a-plane');
@@ -816,7 +820,7 @@ AFRAME.registerComponent('button', {
         let runBox = document.createElement('a-box');
         let resetEntity = document.createElement('a-entity');
         let resetBox = document.createElement('a-box');
-        let newMobileEntity = mobiles.children[2];
+        //let newMobileEntity = mobiles.children[2];
         //let newMobileBox = newMobileEntity.children[0];
         let programEntity = document.createElement('a-entity');
         let programBox = document.createElement('a-box');
@@ -826,12 +830,47 @@ AFRAME.registerComponent('button', {
         let mobileWidth = 6.5 + incremento * (mobilePosition - 1);
         let deleteMobileEntity = document.createElement('a-entity');
         let deleteMobileBox = document.createElement('a-box');
+        let mobilesChildren = Array.from(mobiles.children);
+        let objects = document.getElementsByClassName('object');
+        let found = false;
+        let objectId, objectUsed;
 
 
-        //New Mobile box
-        mobileBox.setAttribute('position', { x: -2 - (incremento * (mobilesCount - 1)), y: 0.5, z: -6 });
-        mobileBox.setAttribute('src', "#tejado");
-        mobileEntity.appendChild(mobileBox);
+        //New Mobile object
+        /*mobileObject.setAttribute('position', { x: -3 - (incremento * (mobilesCount - 1)), y: 1, z: -6 });
+        mobileObject.setAttribute('scale', { x: 0.01, y: 0.01, z: 0.01 });
+        mobileObject.setAttribute('gltf-model', "#object1");
+        mobileObject.setAttribute('animation-mixer', '');
+        mobileEntity.appendChild(mobileObject);*/
+
+        //New Mobile object
+        if (mobilesChildren.length === 3) { //There is no mobile
+            mobileObject.setAttribute('gltf-model', "#object1");
+        } else { //There is at least one program
+            for (let object of objects) {
+                objectId = object.getAttribute('id');
+                for (let i = 0; i < mobilesChildren.length; i++) {
+                    if (i > 2) {
+                        objectUsed = mobilesChildren[i].getAttribute('mobile_component').object;
+                        if (objectId === objectUsed) { //found
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+                if (!found) {
+                    objectId = '#' + objectId;
+                    mobileObject.setAttribute('gltf-model', objectId);
+                    break;
+                } else { //This object is being used. We have to keep searching for one unused
+                    found = false;
+                }
+            }
+        }
+        mobileObject.setAttribute('position', { x: -3 - (incremento * (mobilesCount - 1)), y: 1, z: -6 });
+        mobileObject.setAttribute('scale', { x: 0.01, y: 0.01, z: 0.01 });
+        mobileObject.setAttribute('animation-mixer', '');
+        mobileEntity.appendChild(mobileObject);
 
         //Mobiles menu
         mobiles.setAttribute('mobiles', { count: mobilesCount });
@@ -843,7 +882,7 @@ AFRAME.registerComponent('button', {
 
         //Next mobile menu
         mobileEntity.appendChild(mobileMenu);
-        mobileEntity.setAttribute('mobile_component', { program: '' });
+        mobileEntity.setAttribute('mobile_component', { program: '', object: objectId.slice(1) });
         mobileEntity.setAttribute('id', mobileId);
         mobileMenu.setAttribute('position', { x: -5.9, y: 3, z: 5 + incremento * (mobilePosition - 1) });
         mobileMenu.setAttribute('rotation', { x: 0, y: 90, z: 0 });
