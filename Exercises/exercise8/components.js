@@ -259,7 +259,7 @@ AFRAME.registerComponent('mobiles', {
         mobileEntity.appendChild(runEntity);
         runEntity.appendChild(runBox);
         runEntity.setAttribute('button', { text: 'Run' });
-        runBox.setAttribute('position', { x: -5.65, y: 3.3, z: 3.5 });
+        runBox.setAttribute('position', { x: -5.45, y: 3.3, z: 3.5 });
         runBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         runBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         runBox.setAttribute('src', "#run_button");
@@ -268,7 +268,7 @@ AFRAME.registerComponent('mobiles', {
         mobileEntity.appendChild(resetEntity);
         resetEntity.appendChild(resetBox);
         resetEntity.setAttribute('button', { text: 'Reset' });
-        resetBox.setAttribute('position', { x: -5.65, y: 2, z: 3.5 });
+        resetBox.setAttribute('position', { x: -5.45, y: 2, z: 3.5 });
         resetBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         resetBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         resetBox.setAttribute('src', "#reset_button");
@@ -277,7 +277,7 @@ AFRAME.registerComponent('mobiles', {
         mobileEntity.appendChild(programEntity);
         programEntity.appendChild(programBox);
         programEntity.setAttribute('button', { text: 'Program' });
-        programBox.setAttribute('position', { x: -5.65, y: 3.3, z: 6.4 });
+        programBox.setAttribute('position', { x: -5.45, y: 3.3, z: 6.4 });
         programBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         programBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         programBox.setAttribute('src', "#program_button");
@@ -286,7 +286,7 @@ AFRAME.registerComponent('mobiles', {
         mobileEntity.appendChild(deleteMobileEntity);
         deleteMobileEntity.appendChild(deleteMobileBox);
         deleteMobileEntity.setAttribute('button', { text: 'Delete Mobile' });
-        deleteMobileBox.setAttribute('position', { x: -5.65, y: 2, z: 6.4 });
+        deleteMobileBox.setAttribute('position', { x: -5.45, y: 2, z: 6.4 });
         deleteMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         deleteMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         deleteMobileBox.setAttribute('src', "#delete_mobile_button");
@@ -907,7 +907,7 @@ AFRAME.registerComponent('button', {
         mobileEntity.appendChild(runEntity);
         runEntity.appendChild(runBox);
         runEntity.setAttribute('button', { text: 'Run' });
-        runBox.setAttribute('position', { x: -5.65, y: 3.3, z: 3.5 + incremento * (mobilePosition - 1) });
+        runBox.setAttribute('position', { x: -5.45, y: 3.3, z: 3.5 + incremento * (mobilePosition - 1) });
         runBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         runBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         runBox.setAttribute('src', "#run_button");
@@ -916,7 +916,7 @@ AFRAME.registerComponent('button', {
         mobileEntity.appendChild(resetEntity);
         resetEntity.appendChild(resetBox);
         resetEntity.setAttribute('button', { text: 'Reset' });
-        resetBox.setAttribute('position', { x: -5.65, y: 2, z: 3.5 + incremento * (mobilePosition - 1) });
+        resetBox.setAttribute('position', { x: -5.45, y: 2, z: 3.5 + incremento * (mobilePosition - 1) });
         resetBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         resetBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         resetBox.setAttribute('src', "#reset_button");
@@ -925,7 +925,7 @@ AFRAME.registerComponent('button', {
         mobileEntity.appendChild(programEntity);
         programEntity.appendChild(programBox);
         programEntity.setAttribute('button', { text: 'Program' });
-        programBox.setAttribute('position', { x: -5.65, y: 3.3, z: 6.4 + incremento * (mobilePosition - 1) });
+        programBox.setAttribute('position', { x: -5.45, y: 3.3, z: 6.4 + incremento * (mobilePosition - 1) });
         programBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         programBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         programBox.setAttribute('src', "#program_button");
@@ -934,7 +934,7 @@ AFRAME.registerComponent('button', {
         mobileEntity.appendChild(deleteMobileEntity);
         deleteMobileEntity.appendChild(deleteMobileBox);
         deleteMobileEntity.setAttribute('button', { text: 'Delete Mobile' });
-        deleteMobileBox.setAttribute('position', { x: -5.65, y: 2, z: 6.4 + incremento * (mobilePosition - 1) });
+        deleteMobileBox.setAttribute('position', { x: -5.45, y: 2, z: 6.4 + incremento * (mobilePosition - 1) });
         deleteMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         deleteMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         deleteMobileBox.setAttribute('src', "#delete_mobile_button");
@@ -971,7 +971,7 @@ AFRAME.registerComponent('button', {
                     programEntity.appendChild(programBox);
                     menuEntity.appendChild(programEntity);
                     programEntity.setAttribute('button', { text: 'Change Program' });
-                    programBox.setAttribute('position', { x: -5.6, y: 8, z: 10 + (2 * (programsNum - 1)) });
+                    programBox.setAttribute('position', { x: -5.4, y: 8, z: 10 + (2 * (programsNum - 1)) });
                     programBox.setAttribute('src', programIcon);
                 }
             }
