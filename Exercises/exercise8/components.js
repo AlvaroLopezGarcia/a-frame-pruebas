@@ -144,7 +144,7 @@ AFRAME.registerComponent('programmer_component', {
 
 AFRAME.registerComponent('mobile_component', {
     schema: {
-        event: { type: 'string', default: 'mousedown' },
+        event: { type: 'string', default: 'move' },
         program: { type: 'string', default: '' },
         position: { type: 'array', default: [] }, //origin position
         object: { type: 'string', default: '' },
@@ -567,7 +567,7 @@ AFRAME.registerComponent('button', {
         let box = mobile.children[0];
 
         if (program_id !== "") {
-            box.emit('mousedown');
+            box.emit('move');
         }
     },
 
