@@ -1,0 +1,689 @@
+{
+  "accessors": [
+    {
+      "bufferView": 2,
+      "componentType": 5126,
+      "count": 49047,
+      "max": [
+        158.52626037597656,
+        181.91932678222656,
+        141.41448974609375
+      ],
+      "min": [
+        -158.62440490722656,
+        -207.21153259277344,
+        1.2624168395996094
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 588564,
+      "componentType": 5126,
+      "count": 49047,
+      "max": [
+        0.99998468160629272,
+        0.99998462200164795,
+        0.99998462200164795
+      ],
+      "min": [
+        -0.99998468160629272,
+        -0.99998462200164795,
+        -0.99998462200164795
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "componentType": 5126,
+      "count": 49047,
+      "max": [
+        0.99999237060546875,
+        0.99999254941940308,
+        0.99999254941940308,
+        1
+      ],
+      "min": [
+        -0.99999237060546875,
+        -0.9999924898147583,
+        -0.99999254941940308,
+        -1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 784752,
+      "componentType": 5126,
+      "count": 49047,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "componentType": 5126,
+      "count": 49047,
+      "max": [
+        0.99808347225189209,
+        0.99975019693374634
+      ],
+      "min": [
+        0.00024942652089521289,
+        0.0002498626708984375
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "componentType": 5125,
+      "count": 90285,
+      "max": [
+        49046
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1177128,
+      "componentType": 5126,
+      "count": 56,
+      "max": [
+        6.2154936790466309,
+        115.97869110107422,
+        96.563163757324219
+      ],
+      "min": [
+        -9.4927272796630859,
+        111.63793182373047,
+        51.863231658935547
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1177800,
+      "componentType": 5126,
+      "count": 56,
+      "max": [
+        0.66265344619750977,
+        0.99998462200164795,
+        0.66265344619750977
+      ],
+      "min": [
+        -0.66701781749725342,
+        0.71517670154571533,
+        -0.66701781749725342
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 1569504,
+      "componentType": 5126,
+      "count": 56,
+      "max": [
+        0.039200067520141602,
+        0.69039732217788696,
+        -0.68852853775024414,
+        1
+      ],
+      "min": [
+        -0.35506564378738403,
+        -0.69670838117599487,
+        -0.99816024303436279,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 1570400,
+      "componentType": 5126,
+      "count": 56,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 361140,
+      "componentType": 5125,
+      "count": 132,
+      "max": [
+        55
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1178472,
+      "componentType": 5126,
+      "count": 156,
+      "max": [
+        34.162502288818359,
+        130.37428283691406,
+        75.976150512695312
+      ],
+      "min": [
+        -34.162502288818359,
+        -89.993667602539062,
+        23.253143310546875
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 2,
+      "byteOffset": 1180344,
+      "componentType": 5126,
+      "count": 156,
+      "max": [
+        0.97965461015701294,
+        0.97996795177459717,
+        0.90219736099243164
+      ],
+      "min": [
+        -0.97996795177459717,
+        -0.97965461015701294,
+        -0.88416588306427002
+      ],
+      "type": "VEC3"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 1571296,
+      "componentType": 5126,
+      "count": 156,
+      "max": [
+        0.99626833200454712,
+        0.97997504472732544,
+        0.9999924898147583,
+        1
+      ],
+      "min": [
+        -0.99085921049118042,
+        -0.84750276803970337,
+        -0.9999924898147583,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 3,
+      "byteOffset": 1573792,
+      "componentType": 5126,
+      "count": 156,
+      "max": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "min": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "type": "VEC4"
+    },
+    {
+      "bufferView": 1,
+      "byteOffset": 392376,
+      "componentType": 5126,
+      "count": 156,
+      "max": [
+        0.93178373575210571,
+        0.9994998574256897
+      ],
+      "min": [
+        0.0004655648663174361,
+        0.00049883127212524414
+      ],
+      "type": "VEC2"
+    },
+    {
+      "bufferView": 0,
+      "byteOffset": 361668,
+      "componentType": 5125,
+      "count": 444,
+      "max": [
+        155
+      ],
+      "min": [
+        0
+      ],
+      "type": "SCALAR"
+    },
+    {
+      "bufferView": 4,
+      "componentType": 5126,
+      "count": 1,
+      "max": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "min": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "type": "MAT4"
+    }
+  ],
+  "asset": {
+    "extras": {
+      "author": "dennis.robinson.dev (https://sketchfab.com/dennis.robinson.dev)",
+      "license": "CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)",
+      "source": "https://sketchfab.com/models/6249a0faf569407096d0928a86910f52",
+      "title": "Drone Skeletal Mesh"
+    },
+    "generator": "Sketchfab-3.19.3",
+    "version": "2.0"
+  },
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteLength": 363444,
+      "byteOffset": 0,
+      "name": "floatBufferViews",
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteLength": 393624,
+      "byteOffset": 363444,
+      "byteStride": 8,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1182216,
+      "byteOffset": 757068,
+      "byteStride": 12,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 1576288,
+      "byteOffset": 1939284,
+      "byteStride": 16,
+      "name": "floatBufferViews",
+      "target": 34962
+    },
+    {
+      "buffer": 0,
+      "byteLength": 64,
+      "byteOffset": 3515572,
+      "byteStride": 64,
+      "name": "floatBufferViews"
+    }
+  ],
+  "buffers": [
+    {
+      "byteLength": 3515636,
+      "uri": "scene.bin"
+    }
+  ],
+  "images": [
+    {
+      "uri": "textures/mat_drone_base_normal.png"
+    },
+    {
+      "uri": "textures/mat_drone_base_metallicRoughness.png"
+    },
+    {
+      "uri": "textures/mat_drone_base_baseColor.png"
+    },
+    {
+      "uri": "textures/mat_drone_lights_emissive.png"
+    },
+    {
+      "uri": "textures/mat_drone_lights_normal.png"
+    },
+    {
+      "uri": "textures/mat_drone_lights_baseColor.png"
+    }
+  ],
+  "materials": [
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "mat_drone_base",
+      "normalTexture": {
+        "index": 0,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 2,
+          "texCoord": 0
+        },
+        "metallicFactor": 1,
+        "metallicRoughnessTexture": {
+          "index": 1,
+          "texCoord": 0
+        },
+        "roughnessFactor": 1
+      }
+    },
+    {
+      "alphaMode": "BLEND",
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "name": "Fbx_Default_Material_1",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          0.71999999999999997,
+          0.71999999999999997,
+          0.71999999999999997,
+          0.0043826220000000001
+        ],
+        "metallicFactor": 1,
+        "roughnessFactor": 0.59999999999999998
+      }
+    },
+    {
+      "doubleSided": true,
+      "emissiveFactor": [
+        0,
+        0,
+        0
+      ],
+      "emissiveTexture": {
+        "index": 3,
+        "texCoord": 0
+      },
+      "name": "mat_drone_lights",
+      "normalTexture": {
+        "index": 4,
+        "scale": 1,
+        "texCoord": 0
+      },
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "baseColorTexture": {
+          "index": 5,
+          "texCoord": 0
+        },
+        "metallicFactor": 0,
+        "roughnessFactor": 0.95770514949999996
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "COLOR_0": 3,
+            "NORMAL": 1,
+            "POSITION": 0,
+            "TANGENT": 2,
+            "TEXCOORD_0": 4
+          },
+          "indices": 5,
+          "material": 0,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "COLOR_0": 9,
+            "NORMAL": 7,
+            "POSITION": 6,
+            "TANGENT": 8
+          },
+          "indices": 10,
+          "material": 1,
+          "mode": 4
+        }
+      ]
+    },
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "COLOR_0": 14,
+            "NORMAL": 12,
+            "POSITION": 11,
+            "TANGENT": 13,
+            "TEXCOORD_0": 15
+          },
+          "indices": 16,
+          "material": 2,
+          "mode": 4
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "children": [
+        1
+      ],
+      "name": "RootNode (gltf orientation matrix)",
+      "rotation": [
+        -0.70710678118654746,
+        -0,
+        -0,
+        0.70710678118654757
+      ]
+    },
+    {
+      "children": [
+        2
+      ],
+      "matrix": [
+        0.0052871215157210827,
+        0.99997800588607788,
+        -0.0040041198953986168,
+        0,
+        0.99998599290847778,
+        -0.0052869375795125961,
+        5.6610100727993995e-05,
+        0,
+        3.5439399653114378e-05,
+        -0.0040043629705905914,
+        -0.99999195337295532,
+        0,
+        -12.692098617553711,
+        12.476255416870117,
+        -142.67716979980469,
+        1
+      ],
+      "name": "RootNode (model correction matrix)"
+    },
+    {
+      "children": [
+        3
+      ],
+      "matrix": [
+        1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        -1,
+        0,
+        0,
+        0,
+        0,
+        1
+      ],
+      "name": "73536a0d20664d57be1a2f87899a527b.fbx"
+    },
+    {
+      "children": [
+        4
+      ],
+      "name": "RootNode"
+    },
+    {
+      "children": [
+        5
+      ],
+      "name": "drone_skeletalMesh"
+    },
+    {
+      "children": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "name": ""
+    },
+    {
+      "name": "_rootJoint"
+    },
+    {
+      "mesh": 0,
+      "name": ""
+    },
+    {
+      "mesh": 1,
+      "name": ""
+    },
+    {
+      "mesh": 2,
+      "name": ""
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "OSG_Scene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "skins": [
+    {
+      "inverseBindMatrices": 17,
+      "joints": [
+        6
+      ],
+      "skeleton": 6
+    }
+  ],
+  "textures": [
+    {
+      "sampler": 0,
+      "source": 0
+    },
+    {
+      "sampler": 0,
+      "source": 1
+    },
+    {
+      "sampler": 0,
+      "source": 2
+    },
+    {
+      "sampler": 0,
+      "source": 3
+    },
+    {
+      "sampler": 0,
+      "source": 4
+    },
+    {
+      "sampler": 0,
+      "source": 5
+    }
+  ]
+}
+

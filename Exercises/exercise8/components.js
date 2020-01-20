@@ -198,8 +198,8 @@ AFRAME.registerComponent('mobiles', {
         let deleteMobileBox = document.createElement('a-box');
 
         //Mobile object
-        mobileObject.setAttribute('position', { x: -3, y: 1, z: -6 });
-        mobileObject.setAttribute('scale', { x: 0.01, y: 0.01, z: 0.01 });
+        mobileObject.setAttribute('position', { x: -5, y: 3, z: -6 });
+        mobileObject.setAttribute('scale', { x: 0.005, y: 0.005, z: 0.005 });
         mobileObject.setAttribute('gltf-model', "#object1");
         mobileObject.setAttribute('animation-mixer', '');
         mobileEntity.appendChild(mobileObject);
@@ -222,7 +222,7 @@ AFRAME.registerComponent('mobiles', {
 
         //New  mobile button
         newMobileEntity.setAttribute('button', { text: 'New Mobile' });
-        newMobileBox.setAttribute('position', { x: -5.65, y: 0.65, z: 5 });
+        newMobileBox.setAttribute('position', { x: -5.45, y: 0.65, z: 5 });
         newMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         newMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         newMobileBox.setAttribute('src', "#new_mobile_button");
@@ -832,16 +832,10 @@ AFRAME.registerComponent('button', {
         let deleteMobileBox = document.createElement('a-box');
         let mobilesChildren = Array.from(mobiles.children);
         let objects = document.getElementsByClassName('object');
+        let num = mobilesChildren.length - 3;
         let found = false;
         let objectId, objectUsed;
 
-
-        //New Mobile object
-        /*mobileObject.setAttribute('position', { x: -3 - (incremento * (mobilesCount - 1)), y: 1, z: -6 });
-        mobileObject.setAttribute('scale', { x: 0.01, y: 0.01, z: 0.01 });
-        mobileObject.setAttribute('gltf-model', "#object1");
-        mobileObject.setAttribute('animation-mixer', '');
-        mobileEntity.appendChild(mobileObject);*/
 
         //New Mobile object
         if (mobilesChildren.length === 3) { //There is no mobile
@@ -861,13 +855,19 @@ AFRAME.registerComponent('button', {
                 if (!found) {
                     objectId = '#' + objectId;
                     mobileObject.setAttribute('gltf-model', objectId);
+                    found = true;
                     break;
                 } else { //This object is being used. We have to keep searching for one unused
                     found = false;
                 }
             }
+            if (!found) { //We reuse objects because they are all being used
+                num = num - 11;
+                objectId = '#object' + String(num);
+                mobileObject.setAttribute('gltf-model', objectId);
+            }
         }
-        mobileObject.setAttribute('position', { x: -3 - (incremento * (mobilesCount - 1)), y: 1, z: -6 });
+        mobileObject.setAttribute('position', { x: -5 - (incremento * (mobilesCount - 1)), y: 3, z: -6 });
         mobileObject.setAttribute('scale', { x: 0.01, y: 0.01, z: 0.01 });
         mobileObject.setAttribute('animation-mixer', '');
         mobileEntity.appendChild(mobileObject);
