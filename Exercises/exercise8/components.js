@@ -339,6 +339,36 @@ AFRAME.registerComponent('instructions', {
     },
 });
 
+function makeInstruction(programmer, idImage, typeInstruction) {
+    let instruction = document.createElement('a-entity');
+    let box = document.createElement('a-box');
+    let instructions = programmer.children[9];
+    let instruction_num = programmer.getAttribute('programmer_component').count;
+    let programmer_num = programmer.getAttribute('programmer_component').position;
+    let pos = programmer.children[10].getAttribute("position");
+    let pos_x = 0;
+    let pos_y = 7;
+    let incremento = 1;
+
+    if (instruction_num === 0) {
+        pos_x = pos.x + 5 * (programmer_num);
+        //pos_y = 0.5;
+    } else {
+        pos = instructions.lastChild.children[0].getAttribute("position");
+        pos_x = pos.x;
+        pos_y = pos.y + 0.55;
+    }
+    instructions.appendChild(instruction);
+    instruction.appendChild(box);
+    instruction_num += incremento;
+    programmer.setAttribute('programmer_component', { count: instruction_num });
+    box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
+    box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
+    box.setAttribute('src', idImage);
+    instruction.setAttribute('instruction_component', { event: 'run', type: typeInstruction });
+};
+
+
 AFRAME.registerComponent('button', {
     schema: {
         text: { type: 'string', default: '' },
@@ -381,183 +411,51 @@ AFRAME.registerComponent('button', {
     },
 
     eventButtonHandlerBack: function() {
-        let instruction = document.createElement('a-entity');
-        let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
-        let instruction_num = programmer.getAttribute('programmer_component').count;
-        let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
-        let pos_x = 0;
-        let pos_y = 7;
-        let incremento = 1;
+        let idImage = "#back_instruction";
+        let typeInstruction = "Back";
 
-        if (instruction_num === 0) {
-            pos_x = pos.x + 5 * (programmer_num);
-            //pos_y = 0.5;
-        } else {
-            pos = instructions.lastChild.children[0].getAttribute("position");
-            pos_x = pos.x;
-            pos_y = pos.y + 0.55;
-        }
-        instructions.appendChild(instruction);
-        instruction.appendChild(box);
-        instruction_num += incremento;
-        programmer.setAttribute('programmer_component', { count: instruction_num });
-        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
-        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
-        box.setAttribute('src', "#back_instruction");
-        instruction.setAttribute('instruction_component', { event: 'run', type: 'Back' });
+        makeInstruction(programmer, idImage, typeInstruction);
     },
 
     eventButtonHandlerForward: function() {
-        let instruction = document.createElement('a-entity');
-        let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
-        let instruction_num = programmer.getAttribute('programmer_component').count;
-        let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
-        let pos_x = 0;
-        let pos_y = 7;
-        let incremento = 1;
+        let idImage = "#forward_instruction";
+        let typeInstruction = "Forward";
 
-        if (instruction_num === 0) {
-            pos_x = pos.x + 5 * (programmer_num);
-            //pos_y = 0.5;
-        } else {
-            pos = instructions.lastChild.children[0].getAttribute("position");
-            pos_x = pos.x;
-            pos_y = pos.y + 0.55;
-        }
-        instructions.appendChild(instruction);
-        instruction.appendChild(box);
-        instruction_num += incremento;
-        programmer.setAttribute('programmer_component', { count: instruction_num });
-        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
-        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
-        box.setAttribute('src', "#forward_instruction");
-        instruction.setAttribute('instruction_component', { event: 'run', type: 'Forward' });
+        makeInstruction(programmer, idImage, typeInstruction);
     },
 
     eventButtonHandlerUp: function() {
-        let instruction = document.createElement('a-entity');
-        let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
-        let instruction_num = programmer.getAttribute('programmer_component').count;
-        let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
-        let pos_x = 0;
-        let pos_y = 7;
-        let incremento = 1;
+        let idImage = "#up_instruction";
+        let typeInstruction = "Up";
 
-        if (instruction_num === 0) {
-            pos_x = pos.x + 5 * (programmer_num);
-            //pos_y = 0.5;
-        } else {
-            pos = instructions.lastChild.children[0].getAttribute("position");
-            pos_x = pos.x;
-            pos_y = pos.y + 0.55;
-        }
-        instructions.appendChild(instruction);
-        instruction.appendChild(box);
-        instruction_num += incremento;
-        programmer.setAttribute('programmer_component', { count: instruction_num });
-        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
-        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
-        box.setAttribute('src', "#up_instruction");
-        instruction.setAttribute('instruction_component', { event: 'run', type: 'Up' });
+        makeInstruction(programmer, idImage, typeInstruction);
     },
 
     eventButtonHandlerDown: function() {
-        let instruction = document.createElement('a-entity');
-        let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
-        let instruction_num = programmer.getAttribute('programmer_component').count;
-        let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
-        let pos_x = 0;
-        let pos_y = 7;
-        let incremento = 1;
+        let idImage = "#down_instruction";
+        let typeInstruction = "Down";
 
-        if (instruction_num === 0) {
-            pos_x = pos.x + 5 * (programmer_num);
-            //pos_y = 0.5;
-        } else {
-            pos = instructions.lastChild.children[0].getAttribute("position");
-            pos_x = pos.x;
-            pos_y = pos.y + 0.55;
-        }
-        instructions.appendChild(instruction);
-        instruction.appendChild(box);
-        instruction_num += incremento;
-        programmer.setAttribute('programmer_component', { count: instruction_num });
-        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
-        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
-        box.setAttribute('src', "#down_instruction");
-        instruction.setAttribute('instruction_component', { event: 'run', type: 'Down' });
+        makeInstruction(programmer, idImage, typeInstruction);
     },
 
     eventButtonHandlerLeft: function() {
-        let instruction = document.createElement('a-entity');
-        let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
-        let instruction_num = programmer.getAttribute('programmer_component').count;
-        let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
-        let pos_x = 0;
-        let pos_y = 7;
-        let incremento = 1;
+        let idImage = "#left_instruction";
+        let typeInstruction = "Left";
 
-        if (instruction_num === 0) {
-            pos_x = pos.x + 5 * (programmer_num);
-            //pos_y = 0.5;
-        } else {
-            pos = instructions.lastChild.children[0].getAttribute("position");
-            pos_x = pos.x;
-            pos_y = pos.y + 0.55;
-        }
-        instructions.appendChild(instruction);
-        instruction.appendChild(box);
-        instruction_num += incremento;
-        programmer.setAttribute('programmer_component', { count: instruction_num });
-        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
-        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
-        box.setAttribute('src', "#left_instruction");
-        instruction.setAttribute('instruction_component', { event: 'run', type: 'Left' });
+        makeInstruction(programmer, idImage, typeInstruction);
     },
 
     eventButtonHandlerRight: function() {
-        let instruction = document.createElement('a-entity');
-        let box = document.createElement('a-box');
         let programmer = this.parentNode;
-        let instructions = programmer.children[9];
-        let instruction_num = programmer.getAttribute('programmer_component').count;
-        let programmer_num = programmer.getAttribute('programmer_component').position;
-        let pos = programmer.children[10].getAttribute("position");
-        let pos_x = 0;
-        let pos_y = 7;
-        let incremento = 1;
+        let idImage = "#right_instruction";
+        let typeInstruction = "Right";
 
-        if (instruction_num === 0) {
-            pos_x = pos.x + 5 * (programmer_num);
-            //pos_y = 0.5;
-        } else {
-            pos = instructions.lastChild.children[0].getAttribute("position");
-            pos_x = pos.x;
-            pos_y = pos.y + 0.55;
-        }
-        instructions.appendChild(instruction);
-        instruction.appendChild(box);
-        instruction_num += incremento;
-        programmer.setAttribute('programmer_component', { count: instruction_num });
-        box.setAttribute('position', { x: pos_x, y: pos_y, z: pos.z });
-        box.setAttribute('geometry', { width: '1', height: "0.5", depth: "0.5" });
-        box.setAttribute('src', "#right_instruction");
-        instruction.setAttribute('instruction_component', { event: 'run', type: 'Right' });
+        makeInstruction(programmer, idImage, typeInstruction);
     },
 
     //Finds the program assigned to the mobile
