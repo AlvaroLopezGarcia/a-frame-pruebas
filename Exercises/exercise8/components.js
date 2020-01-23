@@ -12,24 +12,10 @@ AFRAME.registerComponent('programming-enviroment', {
         let text = document.createElement('a-text');
         let programmerEntity = document.createElement('a-entity');
         let programmerBox = document.createElement('a-box');
-        let upEntity = document.createElement('a-entity');
-        let upBox = document.createElement('a-box');
-        let downEntity = document.createElement('a-entity');
-        let downBox = document.createElement('a-box');
-        let leftEntity = document.createElement('a-entity');
-        let leftBox = document.createElement('a-box');
-        let rightEntity = document.createElement('a-entity');
-        let rightBox = document.createElement('a-box');
-        let deleteInstructEntity = document.createElement('a-entity');
-        let deleteInstructBox = document.createElement('a-box');
-        let deleteProgEntity = document.createElement('a-entity');
-        let deleteProgBox = document.createElement('a-box');
         let instructionsEntity = document.createElement('a-entity');
         let programmerId = 'programmer';
-        let forwardEntity = document.createElement('a-entity');
-        let forwardBox = document.createElement('a-box');
-        let backEntity = document.createElement('a-entity');
-        let backBox = document.createElement('a-box');
+        let programButtons = 8;
+        let programmerButtonEntity, programmerButtonBox;
 
         //IDE menu
         ide.appendChild(ideBox);
@@ -48,84 +34,63 @@ AFRAME.registerComponent('programming-enviroment', {
 
 
         //First program menu
-        programmerEntity.appendChild(text);
         programmerEntity.setAttribute('programmer_component', { position: ide.children.length - 1, icon: "icon1" });
         programmerId += ide.children.length - 1;
         programmerEntity.setAttribute('id', programmerId);
         ide.appendChild(programmerEntity);
 
+        //Programmer text
+        programmerEntity.appendChild(text);
         text.setAttribute('position', { x: -0.6, y: 4.25, z: -5.6 });
         text.setAttribute('rotation', { x: 0, y: 0, z: 0 });
         text.setAttribute('scale', { x: 2.5, y: 2, z: 0.5 });
         text.setAttribute('text', { value: 'PROGRAMMER', color: 'white', width: '7' });
 
-        //Up Button
-        programmerEntity.appendChild(upEntity);
-        upEntity.appendChild(upBox);
-        upEntity.setAttribute('button', { text: 'Up' });
-        upBox.setAttribute('position', { x: -0.25, y: 3.25, z: -5.45 });
-        upBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        upBox.setAttribute('src', "#up_button");
-
-        //Down Button
-        programmerEntity.appendChild(downEntity);
-        downEntity.appendChild(downBox);
-        downEntity.setAttribute('button', { text: 'Down' });
-        downBox.setAttribute('position', { x: 1.25, y: 3.25, z: -5.45 });
-        downBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        downBox.setAttribute('src', "#down_button");
-
-        //Left Button
-        programmerEntity.appendChild(leftEntity);
-        leftEntity.appendChild(leftBox);
-        leftEntity.setAttribute('button', { text: 'Left' });
-        leftBox.setAttribute('position', { x: -0.25, y: 2, z: -5.45 });
-        leftBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        leftBox.setAttribute('src', "#left_button");
-
-        //Right Button
-        programmerEntity.appendChild(rightEntity);
-        rightEntity.appendChild(rightBox);
-        rightEntity.setAttribute('button', { text: 'Right' });
-        rightBox.setAttribute('position', { x: 1.25, y: 2, z: -5.45 });
-        rightBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        rightBox.setAttribute('src', "#right_button");
-
-        //Delete Instructions Button
-        programmerEntity.appendChild(deleteInstructEntity);
-        deleteInstructEntity.appendChild(deleteInstructBox);
-        deleteInstructEntity.setAttribute('button', { text: 'Delete Instructions' });
-        deleteInstructBox.setAttribute('position', { x: 4.5, y: 2, z: -5.45 });
-        deleteInstructBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        deleteInstructBox.setAttribute('src', "#delete_instructions_button");
-
-        //Delete Program Button
-        programmerEntity.appendChild(deleteProgEntity);
-        deleteProgEntity.appendChild(deleteProgBox);
-        deleteProgEntity.setAttribute('button', { text: 'Delete Program' });
-        deleteProgBox.setAttribute('position', { x: 4.5, y: 3.25, z: -5.45 });
-        deleteProgBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        deleteProgBox.setAttribute('src', "#delete_program_button");
-
-        //Forward button
-        programmerEntity.appendChild(forwardEntity);
-        forwardEntity.appendChild(forwardBox);
-        forwardEntity.setAttribute('button', { text: 'Forward' });
-        forwardBox.setAttribute('position', { x: 2.75, y: 3.25, z: -5.45 });
-        forwardBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        forwardBox.setAttribute('src', "#forward_button");
-
-        //Back button
-        programmerEntity.appendChild(backEntity);
-        backEntity.appendChild(backBox);
-        backEntity.setAttribute('button', { text: 'Back' });
-        backBox.setAttribute('position', { x: 2.75, y: 2, z: -5.45 });
-        backBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
-        backBox.setAttribute('src', "#back_button");
+        //Programmer Buttons
+        for (let i = 0; i < programButtons; i++) {
+            programmerButtonEntity = document.createElement('a-entity');
+            programmerButtonBox = document.createElement('a-box');
+            programmerEntity.appendChild(programmerButtonEntity);
+            programmerButtonEntity.appendChild(programmerButtonBox);
+            programmerButtonBox.setAttribute('geometry', { width: '1', height: "1", depth: "0.5" });
+            if (i === 0) {
+                programmerButtonEntity.setAttribute('button', { text: 'Up' });
+                programmerButtonBox.setAttribute('position', { x: -0.25, y: 3.25, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#up_button");
+            } else if (i === 1) {
+                programmerButtonEntity.setAttribute('button', { text: 'Down' });
+                programmerButtonBox.setAttribute('position', { x: 1.25, y: 3.25, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#down_button");
+            } else if (i === 2) {
+                programmerButtonEntity.setAttribute('button', { text: 'Left' });
+                programmerButtonBox.setAttribute('position', { x: -0.25, y: 2, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#left_button");
+            } else if (i === 3) {
+                programmerButtonEntity.setAttribute('button', { text: 'Right' });
+                programmerButtonBox.setAttribute('position', { x: 1.25, y: 2, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#right_button");
+            } else if (i === 4) {
+                programmerButtonEntity.setAttribute('button', { text: 'Delete Instructions' });
+                programmerButtonBox.setAttribute('position', { x: 4.5, y: 2, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#delete_instructions_button");
+            } else if (i === 5) {
+                programmerButtonEntity.setAttribute('button', { text: 'Delete Program' });
+                programmerButtonBox.setAttribute('position', { x: 4.5, y: 3.25, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#delete_program_button");
+            } else if (i === 6) {
+                programmerButtonEntity.setAttribute('button', { text: 'Forward' });
+                programmerButtonBox.setAttribute('position', { x: 2.75, y: 3.25, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#forward_button");
+            } else if (i === 7) {
+                programmerButtonEntity.setAttribute('button', { text: 'Back' });
+                programmerButtonBox.setAttribute('position', { x: 2.75, y: 2, z: -5.45 });
+                programmerButtonBox.setAttribute('src', "#back_button");
+            }
+        }
 
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
-        instructionsEntity.setAttribute('instructions');
+        instructionsEntity.setAttribute('instructions', '');
 
         programmerEntity.appendChild(programmerBox);
         programmerBox.setAttribute('position', { x: 2.1, y: 3, z: -5.85 });
@@ -221,16 +186,15 @@ AFRAME.registerComponent('mobiles', {
         mobilesText.setAttribute('text', { value: 'MOBILES', color: 'white', width: '7' });
 
         //New  mobile button
+        mobiles.appendChild(newMobileEntity);
+        newMobileEntity.appendChild(newMobileBox);
         newMobileEntity.setAttribute('button', { text: 'New Mobile' });
         newMobileBox.setAttribute('position', { x: -5.45, y: 0.65, z: 5 });
         newMobileBox.setAttribute('geometry', { width: '2', height: "1", depth: "0.5" });
         newMobileBox.setAttribute('rotation', { x: 0, y: 90, z: 0 });
         newMobileBox.setAttribute('src', "#new_mobile_button");
 
-        newMobileEntity.appendChild(newMobileBox);
-        mobiles.appendChild(newMobileEntity);
-
-        //Firt mobile menu
+        //First mobile menu
         mobileEntity.appendChild(mobileMenu);
         mobileEntity.setAttribute('mobile_component', { program: 'programmer1', object: 'object1' });
         mobileId += mobiles.children.length - 2;
@@ -696,7 +660,7 @@ AFRAME.registerComponent('button', {
 
         //Instructions
         programmerEntity.appendChild(instructionsEntity);
-        instructionsEntity.setAttribute('instructions');
+        instructionsEntity.setAttribute('instructions', '');
 
         programmerEntity.appendChild(programmerBox);
         programmerBox.setAttribute('position', { x: 2.1 + incremento * (programmerPosition - 1), y: 3, z: -5.85 });
