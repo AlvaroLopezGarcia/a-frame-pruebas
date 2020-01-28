@@ -587,6 +587,17 @@ AFRAME.registerComponent('button', {
         }
 
     },
+
+    //Finds the program assigned to the mobile
+    eventButtonHandlerRun: function() {
+        let mobile = this.parentNode.parentNode.parentNode;
+        let program_id = mobile.getAttribute("mobile").program; //id of the program that uses this mobile
+        let drone = mobile.children[1];
+
+        if (program_id !== "") {
+            drone.emit('move');
+        }
+    },
 });
 
 AFRAME.registerComponent('instruction', {
@@ -605,23 +616,23 @@ AFRAME.registerComponent('instruction', {
         let program = this.parentNode.parentNode;
         let program_id = program.getAttribute("id");
         let mobile = e.detail;
-        let box = mobile.children[0];
+        let drone = mobile.children[1];
         let pos = {};
 
-        if (program_id === mobile.getAttribute("mobile_component").program) {
-            pos = box.getAttribute("position");
+        if (program_id === mobile.getAttribute("mobile").program) {
+            pos = drone.getAttribute("position");
             if (this.getAttribute("instruction").type === 'Up') {
-                box.setAttribute('position', { x: pos.x, y: pos.y + 1, z: pos.z });
+                drone.setAttribute('position', { x: pos.x, y: pos.y + 1, z: pos.z });
             } else if (this.getAttribute("instruction").type === 'Down') {
-                box.setAttribute('position', { x: pos.x, y: pos.y - 1, z: pos.z });
+                drone.setAttribute('position', { x: pos.x, y: pos.y - 1, z: pos.z });
             } else if (this.getAttribute("instruction").type === 'Left') {
-                box.setAttribute('position', { x: pos.x - 1, y: pos.y, z: pos.z });
+                drone.setAttribute('position', { x: pos.x - 1, y: pos.y, z: pos.z });
             } else if (this.getAttribute("instruction").type === 'Right') {
-                box.setAttribute('position', { x: pos.x + 1, y: pos.y, z: pos.z });
+                drone.setAttribute('position', { x: pos.x + 1, y: pos.y, z: pos.z });
             } else if (this.getAttribute("instruction").type === 'Forward') {
-                box.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z + 1 });
+                drone.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z + 1 });
             } else if (this.getAttribute("instruction").type === 'Back') {
-                box.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z - 1 });
+                drone.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z - 1 });
             }
         }
     },
@@ -846,9 +857,9 @@ AFRAME.registerComponent('mobile', {
     },
 
     eventMobileHandlerMove: function() {
-        let program_id = this.parentNode.parentNode.getAttribute("mobile").program;
+        let mobile = this;
+        let program_id = mobile.getAttribute("mobile").program;
         let instructions = document.getElementById(program_id).children[2].children;
-        let mobile = this.parentNode;
 
         for (let instruction of instructions) {
             instruction.emit('run', mobile);
