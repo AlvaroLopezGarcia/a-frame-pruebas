@@ -549,6 +549,17 @@ AFRAME.registerComponent('button', {
     eventButtonHandlerNewMobile: function() {
         insertMobile();
     },
+
+    eventButtonHandlerReset: function() {
+        let mobile = this.parentNode.parentNode.parentNode;
+        let drone = mobile.children[1];
+        let pos = mobile.getAttribute('mobile').position;
+        let posX = pos[0];
+        let posY = pos[1];
+        let posZ = pos[2];
+
+        drone.setAttribute('position', { x: posX, y: posY, z: posZ });
+    },
 });
 
 AFRAME.registerComponent('instruction', {
@@ -725,6 +736,8 @@ function insertDrone(mobile, entity) {
     let mobilesEnvironment = document.getElementById('mobiles-environment');
     let mobilesCount = mobilesEnvironment.getAttribute('mobiles-environment').count;
     let increment = 6.5; //Width Programmer Menu
+    let objects = document.getElementsByClassName('object');
+    let dronePosX = -5 - (increment * (mobilesCount - 1));
     let objectId, objectUsed;
 
     if (mobiles.length === 1) { //There was no mobile created
@@ -734,12 +747,10 @@ function insertDrone(mobile, entity) {
         for (let object of objects) {
             objectId = object.getAttribute('id');
             for (let i = 0; i < mobiles.length; i++) {
-                if (i > 2) {
-                    objectUsed = mobilesChildren[i].getAttribute('mobile').object;
-                    if (objectId === objectUsed) { //found
-                        found = true;
-                        break;
-                    }
+                objectUsed = mobilesChildren[i].getAttribute('mobile').object;
+                if (objectId === objectUsed) { //found
+                    found = true;
+                    break;
                 }
             }
             if (!found) {
@@ -758,7 +769,8 @@ function insertDrone(mobile, entity) {
             entity.setAttribute('gltf-model', objectId);
         }
     }
-    entity.setAttribute('position', { x: -5 - (increment * (mobilesCount - 1)), y: 3, z: -6 });
+    entity.setAttribute('position', { x: dronePosX, y: 3, z: -6 });
+    mobile.setAttribute('mobile', { position: [dronePosX, 3, -6] });
     entity.setAttribute('scale', { x: 0.005, y: 0.005, z: 0.005 });
     entity.setAttribute('animation-mixer', '');
     mobile.appendChild(entity);
@@ -779,8 +791,6 @@ function makeMobileEstruct(mobile) {
             mobile.appendChild(entity);
         } else { //DRONE
             insertDrone(mobile, entity);
-            pos = entity.getAttribute('position');
-            mobile.setAttribute('mobile', { position: [pos.x, pos.y, pos.z] });
             console.log('Insertamos el dron');
         }
     }
