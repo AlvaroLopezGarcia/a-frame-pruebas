@@ -560,6 +560,33 @@ AFRAME.registerComponent('button', {
 
         drone.setAttribute('position', { x: posX, y: posY, z: posZ });
     },
+
+    eventButtonHandlerDeleteMobile: function() {
+        let scene = document.getElementById('scene');
+        let mobiles = document.getElementsByClassName('mobile');
+        let mobilesChildren = Array.from(mobiles);
+        let mobile = this.parentNode.parentNode.parentNode;
+        let mobileMenu = mobile.children[0];
+        let increment = mobileMenu.children[0].getAttribute('geometry').width + 0.4;
+        let num = mobilesChildren.indexOf(mobile);
+        let pos, mobileChild;
+
+        //Remove mobile
+        scene.removeChild(mobile);
+        if (mobiles.length > 0) {
+            mobilesChildren = Array.from(mobiles);
+            //Modify mobile-enviroment
+            for (let i = 0; i < mobilesChildren.length; i++) {
+                if (i >= num) { //Modify each mobile
+                    mobile = mobiles[i];
+                    mobileChild = mobile.children[0];
+                    pos = mobileChild.getAttribute('position');
+                    mobileChild.setAttribute('position', { x: pos.x, y: pos.y, z: pos.z - increment });
+                }
+            }
+        }
+
+    },
 });
 
 AFRAME.registerComponent('instruction', {
@@ -777,7 +804,7 @@ function insertDrone(mobile, entity) {
 }
 
 function makeMobileEstruct(mobile) {
-    let mobileNum = document.getElementById('mobiles-environment').getAttribute('mobiles-environment').count;
+    let mobileNum = document.getElementsByClassName('mobile').length;
     let increment = 6.9;
     let mobilePosZ = 12 + (increment * (mobileNum - 1));
     let entity, pos;
