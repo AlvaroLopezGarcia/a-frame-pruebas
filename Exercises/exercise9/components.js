@@ -567,7 +567,7 @@ AFRAME.registerComponent('button', {
         let mobilesChildren = Array.from(mobiles);
         let mobile = this.parentNode.parentNode.parentNode;
         let mobileMenu = mobile.children[0];
-        let increment = mobileMenu.children[0].getAttribute('geometry').width + 0.4;
+        let increment = mobileMenu.children[0].getAttribute('geometry').width + 0.9;
         let num = mobilesChildren.indexOf(mobile);
         let pos, mobileChild;
 
@@ -1001,3 +1001,4 @@ AFRAME.registerComponent('mobile-buttons', {
 
     }
 });
+s
