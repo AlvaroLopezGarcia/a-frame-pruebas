@@ -598,6 +598,72 @@ AFRAME.registerComponent('button', {
             drone.emit('move');
         }
     },
+
+    eventButtonHandlerProgram: function() {
+        let mobile = this.parentNode.parentNode.parentNode;
+        let mobileMenu = mobile.children[0];
+        //let mobileId = mobile.getAttribute('id');
+        //let mobileNum = mobileId.slice(6);
+        let menuEntity = document.createElement('a-entity');
+        let menuBox = document.createElement('a-box');
+        let menuWidth = 0;
+        let ide = document.getElementById('programming-environment');
+        let programs = Array.from(ide.children[1].children);
+        let programsNum = 0;
+        let changeProgramId = document.getElementById('change-program');
+        let program, programIcon, programEntity, programBox;
+
+
+        if (programs.length > 0 && changeProgramId === null) { //Al least there is a program
+            mobileMenu.appendChild(menuEntity);
+            menuEntity.appendChild(menuBox);
+            menuEntity.setAttribute('id', 'change-program');
+            menuBox.setAttribute('color', 'brown');
+            menuWidth = 2 * programs.length;
+            menuBox.setAttribute('geometry', { width: String(menuWidth), height: '2', depth: "0.5" });
+            if (programs.length === 1) {
+                menuBox.setAttribute('position', { x: 0, y: 4, z: 0 });
+            } else {
+                menuBox.setAttribute('position', { x: (-menuWidth / 2) + 1, y: 4, z: 0 });
+            }
+            for (let i = 0; i < programs.length; i++) {
+                program = programs[i];
+                programIcon = '#' + program.getAttribute('program').icon;
+                programEntity = document.createElement('a-entity');
+                programBox = document.createElement('a-box');
+                programEntity.appendChild(programBox);
+                menuEntity.appendChild(programEntity);
+                programEntity.setAttribute('button', { text: 'Change Program' });
+                programBox.setAttribute('position', { x: -2 * i, y: 4, z: 0.7 });
+                programBox.setAttribute('src', programIcon);
+            }
+        }
+    },
+
+    eventButtonHandlerChangeProgram: function() {
+        let changeProgramMenu = this.parentNode;
+        let buttonSrc = this.children[0].getAttribute('src');
+        let icon = buttonSrc.slice(1);
+        let ide = document.getElementById('programming-environment');
+        let programs = Array.from(ide.children[1].children);
+        let mobile = changeProgramMenu.parentNode.parentNode;
+        let programId, mobilePlane;
+
+        for (let i = 0; i < programs.length; i++) {
+            program = programs[i];
+            if (icon === program.getAttribute('program').icon) {
+                programId = program.getAttribute('id');
+                mobilePlane = mobile.children[0].children[2];
+                mobile.setAttribute('mobile', { program: programId });
+                mobilePlane.setAttribute('src', buttonSrc);
+                break;
+            }
+
+        }
+        //Remove Change Program Menu
+        mobile.children[0].removeChild(changeProgramMenu);
+    },
+
 });
 
 AFRAME.registerComponent('instruction', {
@@ -829,7 +895,6 @@ function makeMobileEstruct(mobile) {
             mobile.appendChild(entity);
         } else { //DRONE
             insertDrone(mobile, entity);
-            console.log('Insertamos el dron');
         }
     }
 }
@@ -889,7 +954,7 @@ AFRAME.registerComponent('mobile-menu', {
                 element.setAttribute('position', { x: 1.5, y: 1.3, z: 0.3 });
                 element.setAttribute('geometry', { width: '0.5', height: "0.5" });
                 if (mobileNum === 1) {
-                    element.setAttribute('src', '../Images/icon1.jpeg');
+                    element.setAttribute('src', '#icon1');
                 }
             } else if (i === 3) {
                 element = document.createElement('a-entity');
