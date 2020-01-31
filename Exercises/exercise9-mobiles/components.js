@@ -748,7 +748,7 @@ function insertMobilesObjects() {
         item.setAttribute('class', 'object');
         itemId = 'object' + num;
         item.setAttribute('id', itemId);
-        itemSrc += itemId + './scene.gltf';
+        itemSrc += itemId + '/scene.gltf';
         item.setAttribute('src', itemSrc);
     }
 }
