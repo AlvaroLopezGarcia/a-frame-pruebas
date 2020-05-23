@@ -1,87 +1,92 @@
 
 *[Back to the main page](../README.md)*
 
-## A camara respecting (some) physics
 
-When living in a world with physics, we may want the camera to
-respect it, but only in part. I still want the camera reacting to
-arrow keys (in desktop) or to the touchpad (in Oculus Go) for moving around.
-But I want it to collide with objects, so that it doesn't move through them.
-I also want the camera to be subject to gravity, if there is gravity in the scene.
+En este repositorio se encuentra todo el desarrollo realizado en mi TFG. En concreto, el resultado final
+de cada Sprint y la versión definitiva de mi proyecto. El primer Sprint fue una  primera toma de contacto
+con la tecnologías a usar, el cual se encuentra en Scene-House. Se trata de un juego muy sencillo.
+En la dirección ./Exercises/Final se encuentra todo aquello relacionado con la versión final. De hecho,
+hay dos versiones finales. Una de ellas es para PC y la otra para las Oculus Quest. La versión para PC se
+encuentra en ./Exercises/Final/exercise9 y la versión para las Oculus Quest se encuentra en
+./Exercises/Final/exercise9-oculus. En ambas encontraremos un archivo JavaScript y un HTML. En los archivos
+JavaScript están desarrollados los componentes y en el HTML se ha definido la estructura del proyecto.
+Además, en la dirección ./Exercises/Final se encuentran dos directorios más. Uno utiliza solo móviles y
+drones; y el otro es el del IDE. Esto se hizo para que se pudiera apreciar la independencia de unos módulos
+y de otros.
 
-*Note: * In many cases, moving the camera with the keys or touchpad is not a good idea,
-and it is better to use teleports or meshes for moving around.
-But still I find it very convenient for some cases, such as
-first person games. Consider moving around in a maze, for example.
+La interfaz tiene dos modos de uso:
 
-### Using kinematic-body
+1. El primero es mediante un ordenador ejecutándolo en el navegador. Con el ratón se mueve la cámara
+e interactuamos con los botones haciendo click, y con las flechas se mueve el usuario. Para ejecutar la versión
+VR haga uso del siguiente enlace:
+	https://alvarolopezgarcia.github.io/a-frame-pruebas/Exercises/Final/exercise9-oculus/exercise-9.html
 
-Fortunately, there is a component just for this.
-The [kinematic-body](https://github.com/donmccurdy/aframe-extras/blob/master/src/misc/kinematic-body.js)
-component of [AFrame Extras](https://github.com/donmccurdy/aframe-extras)
-is designed to act as a "rig" for a camera. Unfortunately, it is deprecated,
-but [more on that below](#deprecation).
+2. El segundo es mediante las gafas VR y los mandos ejecuntándolo en el navegador. Con las gafas movemos la
+cámara y con los mandos usamos un puntero láser. Apuntamos a un objetivo y hacemos click en el mando derecho
+para interactuar con los botones de la escena. El desplazamiento en este caso se puede realizar o
+desplazándote tú físicamente o haciendo uso del joystick del mando. Para ejecutar la versión VR haga uso del
+siguiente enlace:
+	https://alvarolopezgarcia.github.io/a-frame-pruebas/Exercises/Final/exercise9/exercise-9.html
+	
 
-Since 'kinematics-body' builds on a component defined in
-[AFrame Physics System](https://github.com/donmccurdy/aframe-physics-system/)
-(`velocity`), we need to also includ it.
-So, the JavaScript modules included in the `head` of our HTML file will be like this:
+Con respecto a los componentes, unos trabajan sobre la estructura de móviles, otros que trabajan en la estructura
+de programas y otros que en ambos. Utilizamos una serie de componentes que son los siguientes:
 
-```html
-<script src="//aframe.io/releases/0.8.2/aframe.min.js"></script>
-<script src="//cdn.rawgit.com/donmccurdy/aframe-physics-system/v3.3.0/dist/aframe-physics-system.min.js"></script>
-<script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v5.0.0/dist/aframe-extras.min.js"></script>
-```
+1. Componentes usados para el menú del IDE:
 
-The rest, is adding the rig to the camera:
+    - programming-environment: este componente se encargará de inicializar todas las entidades referentes al IDE y
+	al primer programa. Además, se encargará de asociar determinados componentes a entidades o nodos hijos para que
+	generen toda la estructura inicial en el DOM. Por tanto, todo lo referente a los programas y a las instrucciones
+	quedarán como nodos hijos de dicha entidad.
+	
+    - ide-menu: este componente se encargará de crear todos los elementos visibles del IDE (el botón y
+	el panel) y la entidad que contendrá todos los programas que se generen a lo largo de la interacción.
+		
+    - programs: es el componente encargado de insertar en el DOM las texturas e iconos a usar por los programas y el
+	primer programa. 
+		
+    - button:
+		
 
-```html
-<a-entity kinematic-body="radius: 0.8" movement-controls="fly: false" position="0 0 5" look-controls>
-  <a-entity camera position="0 1.6 0" ></a-entity>
-  <a-cylinder height="2" radius="0.8" color="green"></a-box>
-</a-entity>
-```
+2. Componentes usados para cada programa:
+	
+    - program: este componente crea toda la estructura de un programa y la inserta en el DOM.
+	
+    - program-menu: este componente crea e inserta en el DOM el panel del programa y el texto.
+    
+	- program-buttons: este componente crea todos los botones que tiene un menú de programa e inserta en el DOM las
+	texturas correspondientes a sus botones.
+    
+	- instructions: este componente únicamente indica la entidad que engloba todas las instrucciones del programa.
+    
+	- instruction: este componente mueve el dron en una dirección en función del tipo de instrucción que sea.
+	
+	- button
+	
+3. Componentes usados para el menú de móviles:
 
-The `radius` parameter to `kinematic-body` is the radius of the sphere using to detect collision.
-I've set `fly:false` for `movement-controls` to simulate better
-a land vehicule (or a person walking), but that's not really needed.
-Since `camera` is now in a child entity of the rig, its position is relative to it.
-Therefore, seting it to "X=0, Y=1.6, Z=0" will really position it,
-when the scene loads, at  "X=0, Y=1.6, Z=5". When the rig moves,
-the camera will move with it.
+    - mobiles-environment: este componente se encargará de inicializar todo aquello referente al menú de móviles,
+	al menú del primer móvil y al primer dron. Además, se encargará de asociar determinados componentes a entidades
+	o nodos hijos para que generen toda la estructura inicial en el DOM.
 
-I've added also a cylinder as a child of the rig, just to approximately show
-the radius of collision. A sphere would be a better representation, but in this
-specific case, the cylinder seems to be easier to see from the camera.
+    - mobiles-menu: este componente crea toda la estructura del menú de móviles.
 
-Watch [this scene in your browser](camera.html),
-or check its complete [source code](https://github.com/jgbarah/aframe-playground/blob/master/physics-02/camera.html)
+    - button
 
-The final result is like this:
+4. Componentes usados para cada móvil (menú y dron):
 
-![Physics camera](aframe-camera.gif)
+    - mobile: este componente se encargará de inicializar todo aquello referente al menú del móvil e insertar el
+	dron en la escena. Además de ejecutar todas las instrucciones del programa que tenga asignado el dron.
 
-### Preventing deprecation
-<a name="deprecation"></a>
+    - mobile-menu: este componente se encargará de crear el menú del móvil.
 
-As I commented, `kinematic-body` is deprecated in AFrame Extras.
-Therefor, I've just written its code in
-[kinema.js](https://github.com/jgbarah/aframe-playground/blob/master/physics-02/kinema.js),
-so that it is still available when new versions of AFrame Extras remove it.
-I've also renamed the component to `kinema-body`, to avoid 
-conflicts with the component still offered by Aframe Extras.
+    - mobile-buttons: este componente se encargará de crear los botones del menú del móvil y de insertar las texturas
+	a usar en los assets del DOM.
 
-The code is almost the same, with the only differences of
-including `kinema.js` with the JavaScript modules
-(`aframe-extras` is still needed for `movement-controls`), and using
-the component `kinema-body` instead of `kinematic-body`:
+    - button
 
-```html
-<a-entity kinema-body="radius: 0.8" movement-controls="fly: false" position="0 0 5" look-controls>
-  <a-entity camera position="0 1.6 0" ></a-entity>
-  <a-cylinder height="2" radius="0.8" color="green"></a-box>
-</a-entity>
-```
+En cuanto al componente button, se usa varias veces debido a que todos los botones usan dicho componente sea la función
+que tenga el botón. Este componente se encarga dar una funcionalidad específica a cada botón.
 
-Watch [this scene in your browser](camera-2.html),
-or check its complete [source code](https://github.com/jgbarah/aframe-playground/blob/master/physics-02/camera-2.html)
+Para más detalles visite mi sitio web:
+	https://alvarolopezgarcia.github.io/Proyecto_Aframe_TFG/
