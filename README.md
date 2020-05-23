@@ -86,7 +86,7 @@ de programas y otros que en ambos. Utilizamos una serie de componentes que son l
     - button
 
 En cuanto al componente button, se usa varias veces debido a que todos los botones usan dicho componente sea la función
-que tenga el botón. Este componente se encarga dar una funcionalidad específica a cada botón.
+que tenga el botón. Este componente se encarga de dar una funcionalidad específica a cada botón.
 
 Para más detalles visite mi sitio web:
 	https://alvarolopezgarcia.github.io/Proyecto_Aframe_TFG/
